@@ -55,6 +55,7 @@ jobs:
           title: Update AUTHORS
           body: Credit new contributors by updating AUTHORS
           branch: update-authors
+          delete-branch: true
           # commit-message: ${PR_TITLE}
           # title: ${PR_TITLE}
           # body: ${PR_TITLE}
