@@ -28,14 +28,15 @@ jobs:
           echo ::set-output name=branch_name::${BRANCH_NAME}
           echo ::set-output name=pr_title::${PR_TITLE}
 
-      - name: Branch name
+      - name: Prepare BRANCH_NAME and PR_TITLE
+        id: vars
         run: |
           YEAR_AND_WEEK="$(date +"%y.%U.")"
           VERSION=${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}
           export BRANCH_NAME BRANCH_NAME="rel/${VERSION}"          
           export PR_TITLE PR_TITLE="chore: release ${VERSION}"          
-          echo ${BRANCH_NAME}
-          echo ${PR_TITLE}
+          echo ::set-output name=branch_name::${BRANCH_NAME}
+          echo ::set-output name=pr_title::${PR_TITLE}
 
       - name: Run a one-line script
         run: echo Hello, world!
@@ -52,9 +53,9 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           commit-message: update authors
-          title: Update AUTHORS
+          title: ${{ steps.vars.outputs.pr_title }}
           body: Credit new contributors by updating AUTHORS
-          branch: update-authors
+          branch: ${{ steps.vars.outputs.branch_name }}
           delete-branch: true
           # commit-message: ${PR_TITLE}
           # title: ${PR_TITLE}
