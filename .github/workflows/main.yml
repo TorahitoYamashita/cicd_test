@@ -20,7 +20,7 @@ jobs:
         run: |
           YEAR_AND_WEEK="$(date +"rel/%y.%U.")"
           export BRANCH_NAME BRANCH_NAME="${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}"
-          echo BRANCH_NAME
+          echo ${BRANCH_NAME}
 
       - name: Run a one-line script
         run: echo Hello, world!
