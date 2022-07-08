@@ -53,5 +53,5 @@ jobs:
           branch: ${{ steps.vars.outputs.branch_name }}
           delete-branch: true
           base: main
-          assignees: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          assignees: ${{ github.actor }}
+          author: ${{ github.actor }}
