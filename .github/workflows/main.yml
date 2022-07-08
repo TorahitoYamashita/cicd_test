@@ -10,14 +10,14 @@ on:
         required: true
       versionBump:
         description: >
-          "How would you like to bump the version?
+          How would you like to bump the version?
             major (2.0.0)
             minor (1.2.0)
             patch (1.1.1)
             pre-release major (2.0.0-beta.1)
             pre-release minor (1.2.0-beta.1)
             pre-release patch (1.1.1-beta.1)
-            pre-release (1.1.1-beta.1)"
+            pre-release (1.1.1-beta.1)
         required: true  
 
 jobs:  
