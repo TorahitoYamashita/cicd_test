@@ -9,7 +9,7 @@ on:
         description: 'Number of release this week'
         required: true
       versionBump:
-        description: |
+        description: |+
           How would you like to bump the version?
           major (2.0.0)
           minor (1.2.0)
