@@ -6,18 +6,18 @@ on:
   workflow_dispatch:
     inputs:
       weeklyReleaseNumber:
-        description: 'Weekly Release Number'     
+        description: 'Number of release this week'
         required: true
       versionBump:
         description: |
-          'How would you like to bump it?
-            major (2.0.0) 
-            minor (1.2.0) 
-            patch (1.1.1) 
-            pre-release major (2.0.0-beta.1) 
-            pre-release minor (1.2.0-beta.1) 
-            pre-release patch (1.1.1-beta.1) 
-            pre-release (1.1.1-beta.1)'     
+          'How would you like to bump the version? \n
+            major (2.0.0) \n
+            minor (1.2.0) \n
+            patch (1.1.1) \n
+            pre-release major (2.0.0-beta.1) \n
+            pre-release minor (1.2.0-beta.1) \n
+            pre-release patch (1.1.1-beta.1) \n
+            pre-release (1.1.1-beta.1)'
         required: true  
 
 jobs:  
