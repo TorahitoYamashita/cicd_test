@@ -50,9 +50,6 @@ jobs:
       - name: Make changes to pull request
         run: |
           npm i -g @jsdevtools/version-bump-prompt
-          bump ${{ github.event.inputs.versionBump }}
-          npm i -g conventional-changelog-cli
-          conventional-changelog -p angular -i CHANGELOG.md -s
 
       - name: Reset promotion branch
         run: |
