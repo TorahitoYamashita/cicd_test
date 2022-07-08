@@ -28,6 +28,12 @@ jobs:
           echo ::set-output name=branch_name::${BRANCH_NAME}
           echo ::set-output name=pr_title::${PR_TITLE}
 
+      - name: Branch name
+        run: |
+          YEAR_AND_WEEK="$(date +"rel/%y.%U.")"
+          export BRANCH_NAME BRANCH_NAME="${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}"
+          echo BRANCH_NAME
+
       - name: Run a one-line script
         run: echo Hello, world!
 
