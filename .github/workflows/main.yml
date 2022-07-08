@@ -39,17 +39,12 @@ jobs:
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
-        with:
-          commit-message: update authors
-          title: ${{ steps.vars.outputs.pr_title }}
-          body: Credit new contributors by updating AUTHORS
+        with:          
+          title: ${{ steps.vars.outputs.pr_title }}          
+          body: ${{ steps.vars.outputs.pr_title }}
+          commit-message: ${{ steps.vars.outputs.pr_title }}
           branch: ${{ steps.vars.outputs.branch_name }}
           delete-branch: true
-          # commit-message: ${PR_TITLE}
-          # title: ${PR_TITLE}
-          # body: ${PR_TITLE}
-          # branch: ${BRANCH_NAME}
-          # delete-branch: true
-          # base: dev
-          # assignees: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          # author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          base: main
+          assignees: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
