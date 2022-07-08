@@ -54,4 +54,4 @@ jobs:
           delete-branch: true
           base: main
           assignees: ${{ github.actor }}
-          author: ${{ github.actor }}
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
