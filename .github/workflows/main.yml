@@ -52,6 +52,6 @@ jobs:
           commit-message: ${{ steps.vars.outputs.pr_title }}
           branch: ${{ steps.vars.outputs.branch_name }}
           delete-branch: true
-          base: dev
+          base: main
           assignees: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
