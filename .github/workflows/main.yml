@@ -33,14 +33,21 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
 
+      - name: Make changes to pull request
+        run: date +%s > report.txt
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
-          commit-message: ${PR_TITLE}
-          title: ${PR_TITLE}
-          body: ${PR_TITLE}
-          branch: ${BRANCH_NAME}
-          delete-branch: true
-          base: dev
-          assignees: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          commit-message: update authors
+          title: Update AUTHORS
+          body: Credit new contributors by updating AUTHORS
+          branch: update-authors
+          # commit-message: ${PR_TITLE}
+          # title: ${PR_TITLE}
+          # body: ${PR_TITLE}
+          # branch: ${BRANCH_NAME}
+          # delete-branch: true
+          # base: dev
+          # assignees: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          # author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
