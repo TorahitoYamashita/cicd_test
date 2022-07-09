@@ -68,6 +68,18 @@ jobs:
           assignees: ${{ github.actor }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
 
+      - name: Send custom JSON data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          # This data can be any valid JSON from a previous step in the GitHub Action
+          payload: |
+            {
+              "tora": "value",
+              "sushi": "bar"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       # - name: Enable Pull Request Automerge
       #   if: steps.cpr.outputs.pull-request-operation == 'created'
       #   uses: peter-evans/enable-pull-request-automerge@v2
