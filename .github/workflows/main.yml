@@ -71,3 +71,6 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+
+      - name: debug
+        uses: hmarr/debug-action@v2
