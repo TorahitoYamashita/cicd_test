@@ -52,7 +52,8 @@ jobs:
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v4
-        with:          
+        with:
+          token: ${{ secrets.PAT }}
           title: ${{ steps.vars.outputs.pr_title }}          
           body: ${{ steps.vars.outputs.pr_title }}
           commit-message: ${{ steps.vars.outputs.pr_title }}
