@@ -1,36 +1,77 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  # push:
-  #   branches: [ "main" ]
-  # pull_request:
-  #   branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      weeklyReleaseNumber:
+        description: 'Number of release this week'
+        required: true
+      versionBump:
+        description: |
+          How would you like to bump the version?
+          major (2.0.0) |
+          minor (1.2.0) |
+          patch (1.1.1) |
+          pre-release major (2.0.0-beta.1) |
+          pre-release minor (1.2.0-beta.1) |
+          pre-release patch (1.1.1-beta.1) |
+          pre-release (1.1.1-beta.1)
+        required: true  
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
+jobs:  
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+        with:
+          ref: main
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: debug
+        uses: hmarr/debug-action@v2
+        
+      - name: Prepare BRANCH_NAME and PR_TITLE
+        id: vars
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          YEAR_AND_WEEK="$(date +"%y.%U.")"
+          VERSION=${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}
+          export BRANCH_NAME BRANCH_NAME="rel/${VERSION}"          
+          export PR_TITLE PR_TITLE="chore: release ${VERSION}"          
+          echo ::set-output name=branch_name::${BRANCH_NAME}
+          echo ::set-output name=pr_title::${PR_TITLE}
+
+      - name: Reset promotion branch
+        run: |
+          git fetch origin dev:dev
+          git reset --hard dev
+
+      - name: Make changes to pull request
+        run: |
+          npm i -g @jsdevtools/version-bump-prompt
+          bump ${{ github.event.inputs.versionBump }}
+          npm i -g conventional-changelog-cli
+          conventional-changelog -p angular -i CHANGELOG.md -s
+          echo here
+          echo ${{ secrets }}
+          
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT }}
+          title: ${{ steps.vars.outputs.pr_title }}          
+          body: ${{ steps.vars.outputs.pr_title }}
+          commit-message: ${{ steps.vars.outputs.pr_title }}
+          branch: ${{ steps.vars.outputs.branch_name }}
+          delete-branch: true
+          base: main
+          assignees: ${{ github.actor }}
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v2
+        with:
+          token: ${{ secrets.PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+
