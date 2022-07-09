@@ -49,7 +49,7 @@ jobs:
           npm i -g conventional-changelog-cli
           conventional-changelog -p angular -i CHANGELOG.md -s
           echo here
-          echo ${{ secrets.PAT }}
+          echo ${{ secrets }}
           
       - name: Create Pull Request
         id: cpr
