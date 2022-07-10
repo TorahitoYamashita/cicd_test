@@ -29,7 +29,7 @@ jobs:
 
       - name: debug
         uses: hmarr/debug-action@v2
-        
+
       - name: Prepare BRANCH_NAME and PR_TITLE
         id: vars
         run: |
@@ -68,10 +68,70 @@ jobs:
           assignees: ${{ github.actor }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
 
+      - name: Send custom JSON data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          # This data can be any valid JSON from a previous step in the GitHub Action
+          payload: |
+            {
+              "url": "${{ steps.cpr.outputs.pull-request-url }}",
+              "operation": "${{ steps.cpr.outputs.pull-request-operation }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # - id: automerge
+      #   name: automerge
+      #   uses: "pascalgn/automerge-action@v0.15.3"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     PULL_REQUEST: ${{ steps.cpr.outputs.pull-request-number }}
+
+      # - name: feedback
+      #   if: ${{ steps.automerge.outputs.mergeResult }} == "merged"
+      #   run: |
+      #     echo "Pull request ${{ steps.automerge.outputs.pullRequestNumber }} merged!"
+          
       - name: Enable Pull Request Automerge
+        id: mergeeeee
         if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: peter-evans/enable-pull-request-automerge@v2
         with:
           token: ${{ secrets.PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+
+      - name: Dump steps context
+        id: stepssss
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"          
+
+      - name: Testingggg
+        run: |
+          echo ${{ toJson(steps.stepssss.outputs) }}
+          echo "$STEPS_CONTEXT"
+
 
