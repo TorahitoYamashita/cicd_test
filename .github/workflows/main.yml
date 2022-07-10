@@ -75,8 +75,8 @@ jobs:
           # This data can be any valid JSON from a previous step in the GitHub Action
           payload: |
             {
-              "url": ${{ steps.cpr.outputs.pull-request-url }},
-              "operation": ${{ steps.cpr.outputs.pull-request-operation }}
+              "url": "${{ steps.cpr.outputs.pull-request-url }}",
+              "operation": "${{ steps.cpr.outputs.pull-request-operation }}"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
