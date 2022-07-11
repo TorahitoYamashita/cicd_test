@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      test-result: ${{ steps.set_outputs.outputs.branch_name }}
+      branch_name: ${{ steps.set_outputs.outputs.branch_name }}
 
     steps:
       - uses: actions/checkout@v3
@@ -39,11 +39,6 @@ jobs:
           export PR_TITLE PR_TITLE="chore: release ${VERSION}"
           echo ::set-output name=branch_name::${BRANCH_NAME}
           echo ::set-output name=pr_title::${PR_TITLE}
-
-      # - name: set outputs
-      #   id: set_outputs
-      #   run: |
-      #     echo "::set-output name=test-result::$TEST_RESULT"
 
       - name: Reset promotion branch
         run: |
