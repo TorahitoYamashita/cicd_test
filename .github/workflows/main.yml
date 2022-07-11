@@ -19,7 +19,7 @@ on:
         required: true  
 
 env: 
-  YEAR_AND_WEEK: "$(date +"%y.%U.")"
+  YEAR_AND_WEEK: $(date +"%y.%U.")
   VERSION: ${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}
   BRANCH_NAME: "rel/${VERSION}"          
   PR_TITLE: "chore: release ${VERSION}"          
