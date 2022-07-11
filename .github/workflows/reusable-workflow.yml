@@ -18,6 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: echoing
+        run: |
+          echo ${{ inputs.branch_name }}
+          echo ${{ inputs.version_bump }}
+
       - name: Make changes to pull request
         run: |
           npm i -g @jsdevtools/version-bump-prompt

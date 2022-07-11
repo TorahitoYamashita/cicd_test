@@ -25,6 +25,9 @@ jobs:
   Create_Staging_PR:
     runs-on: ubuntu-latest
 
+    # outputs:
+    #   test-result: ${{ steps.set_outputs.outputs.test-result }}
+
     steps:
       - uses: actions/checkout@v3
         with:
@@ -41,6 +44,11 @@ jobs:
           echo ::set-output name=branch_name::${BRANCH_NAME}
           echo ::set-output name=pr_title::${PR_TITLE}
           ${{ env.testing_env = "changed" }}
+
+      # - name: set outputs
+      #   id: set_outputs
+      #   run: |
+      #     echo "::set-output name=test-result::$TEST_RESULT"
 
       - name: Reset promotion branch
         run: |
@@ -140,4 +148,10 @@ jobs:
           echo ${{ toJson(steps.stepssss.outputs) }}
           echo "$STEPS_CONTEXT"
 
+  call-workflow-passing-data:
+    needs: [Create_Staging_PR]
+    uses: TorahitoYamashita/cicd_test/.github/workflows/reusable-workflow.yml@main
+    with:
+      branch_name: ${{ needs.Create_Staging_PR.outputs.branch_name }}
+      version_bump: ${{ github.event.inputs.versionBump }}
 
