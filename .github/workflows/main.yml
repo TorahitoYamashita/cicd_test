@@ -18,9 +18,6 @@ on:
           pre-release (1.1.1-beta.1)
         required: true  
 
-env: 
-  testing_env: "placeHolder"
-
 jobs:  
   Create_Staging_PR:
     runs-on: ubuntu-latest
@@ -36,14 +33,12 @@ jobs:
       - name: Prepare BRANCH_NAME and PR_TITLE
         id: vars
         run: |
-          echo $testing_env
           YEAR_AND_WEEK="$(date +"%y.%U.")"
           VERSION=${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}
           export BRANCH_NAME BRANCH_NAME="rel/${VERSION}"
           export PR_TITLE PR_TITLE="chore: release ${VERSION}"
           echo ::set-output name=branch_name::${BRANCH_NAME}
           echo ::set-output name=pr_title::${PR_TITLE}
-          ${{ env.testing_env = "changed" }}
 
       # - name: set outputs
       #   id: set_outputs
@@ -52,7 +47,6 @@ jobs:
 
       - name: Reset promotion branch
         run: |
-          echo $testing_env
           git fetch origin dev:dev
           git reset --hard dev
 
