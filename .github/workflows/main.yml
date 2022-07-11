@@ -150,7 +150,7 @@ jobs:
 
   call-workflow-passing-data:
     needs: [Create_Staging_PR]
-    uses: TorahitoYamashita/cicd_test/.github/workflows/reusable-workflow.yml@main
+    uses: ./.github/workflows/reusable-workflow.yml@main
     with:
       branch_name: ${{ needs.Create_Staging_PR.outputs.branch_name }}
       version_bump: ${{ github.event.inputs.versionBump }}
