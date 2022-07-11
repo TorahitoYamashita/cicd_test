@@ -22,7 +22,9 @@ jobs:
           YEAR_AND_WEEK="$(date +"%y.%U.")"
           VERSION=${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}
           export PR_TITLE PR_TITLE="chore: release ${VERSION}"
+          export TAG TAG="v${VERSION}"
           echo ::set-output name=pr_title::${PR_TITLE}
+          echo ::set-output name=tag::${TAG}
 
       - name: Reset promotion branch
         run: |
@@ -31,7 +33,7 @@ jobs:
 
       - name: Create tag
         run: |
-          git tag "v${VERSION}"
+          git tag ${{ steps.vars.outputs.tag }}
           git push --tags
 
       - name: Create Pull Request
