@@ -1,4 +1,4 @@
-name: Dev to Staging Release
+name: Staging to Production Release
 
 on:
   workflow_dispatch:
@@ -6,20 +6,9 @@ on:
       weeklyReleaseNumber:
         description: 'Number of the release of the week'
         required: true
-      versionBump:
-        description: |
-          How would you like to bump the version?
-          major (2.0.0) |
-          minor (1.2.0) |
-          patch (1.1.1) |
-          pre-release major (2.0.0-beta.1) |
-          pre-release minor (1.2.0-beta.1) |
-          pre-release patch (1.1.1-beta.1) |
-          pre-release (1.1.1-beta.1)
-        required: true  
 
 jobs:  
-  Create_Staging_PR:
+  Create_Production_PR:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,22 +21,13 @@ jobs:
         run: |
           YEAR_AND_WEEK="$(date +"%y.%U.")"
           VERSION=${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}
-          export BRANCH_NAME BRANCH_NAME="rel/${VERSION}"
           export PR_TITLE PR_TITLE="chore: release ${VERSION}"
-          echo ::set-output name=branch_name::${BRANCH_NAME}
           echo ::set-output name=pr_title::${PR_TITLE}
 
       - name: Reset promotion branch
         run: |
           git fetch origin dev:dev
           git reset --hard dev
-
-      - name: Make changes to pull request
-        run: |
-          npm i -g @jsdevtools/version-bump-prompt
-          bump ${{ github.event.inputs.versionBump }}
-          npm i -g conventional-changelog-cli
-          conventional-changelog -p angular -i CHANGELOG.md -s
           
       - name: Create Pull Request
         id: cpr
@@ -57,7 +37,7 @@ jobs:
           title: ${{ steps.vars.outputs.pr_title }}
           body: ${{ steps.vars.outputs.pr_title }}
           commit-message: ${{ steps.vars.outputs.pr_title }}
-          branch: ${{ steps.vars.outputs.branch_name }}
+          # branch: ${{ steps.vars.outputs.branch_name }}
           delete-branch: true
           base: main
           assignees: ${{ github.actor }}
@@ -129,15 +109,3 @@ jobs:
         env:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"          
-
-      - name: Testingggg
-        run: |
-          echo ${{ toJson(steps.stepssss.outputs) }}
-          echo "$STEPS_CONTEXT"
-
-  call-workflow-passing-data:
-    uses: ./.github/workflows/reusable-workflow.yml
-    with:
-      version_bump: ${{ github.event.inputs.versionBump }}
-    secrets: inherit
-
