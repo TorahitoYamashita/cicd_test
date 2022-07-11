@@ -22,7 +22,7 @@ env:
   testing_env: placeHolder
 
 jobs:  
-  Create Staging PR:
+  Create_Staging_PR:
     runs-on: ubuntu-latest
 
     steps:

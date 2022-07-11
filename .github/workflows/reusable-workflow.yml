@@ -12,7 +12,7 @@ on:
 
 
 jobs:
-  Create PR to Sync Dev:
+  Create_PR_to_Sync_Dev:
     runs-on: ubuntu-latest
     
     steps:
