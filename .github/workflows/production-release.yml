@@ -29,6 +29,9 @@ jobs:
           git fetch origin dev:dev
           git reset --hard dev
           
+      - name: Uncommitted change
+        run: date +%s > report.txt
+
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v4
@@ -55,32 +58,14 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-      # - id: automerge
-      #   name: automerge
-      #   uses: "pascalgn/automerge-action@v0.15.3"
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     PULL_REQUEST: ${{ steps.cpr.outputs.pull-request-number }}
-
-      # - name: feedback
-      #   if: ${{ steps.automerge.outputs.mergeResult }} == "merged"
-      #   run: |
-      #     echo "Pull request ${{ steps.automerge.outputs.pullRequestNumber }} merged!"
           
-      - name: Enable Pull Request Automerge
-        id: mergeeeee
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v2
-        with:
-          token: ${{ secrets.PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-      # - name: call-workflow-passing-data
-      #   uses: TorahitoYamashita/cicd_test/.github/workflows/reusable-workflow.yml@main
+      # - name: Enable Pull Request Automerge
+      #   id: mergeeeee
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: peter-evans/enable-pull-request-automerge@v2
       #   with:
-      #     branch_name: ${{ steps.vars.outputs.branch_name }}
-      #     version_bump: ${{ github.event.inputs.versionBump }}
+      #     token: ${{ secrets.PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
       
       - name: Dump GitHub context
         env:
