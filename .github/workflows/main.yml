@@ -22,9 +22,6 @@ jobs:
   Create_Staging_PR:
     runs-on: ubuntu-latest
 
-    outputs:
-      branch_name: ${{ steps.set_outputs.outputs.branch_name }}
-
     steps:
       - uses: actions/checkout@v3
         with:
@@ -138,14 +135,8 @@ jobs:
           echo "$STEPS_CONTEXT"
 
   call-workflow-passing-data:
-    needs: [Create_Staging_PR]
     runs-on: ubuntu-latest
-    # uses: ./.github/workflows/reusable-workflow.yml
-    # with:
-    #   branch_name: ${{ needs.Create_Staging_PR.outputs.branch_name }}
-    #   version_bump: ${{ github.event.inputs.versionBump }}
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      version_bump: ${{ github.event.inputs.versionBump }}
 
-    steps: 
-      - name: ECHOoooo
-        run: |
-          echo ${{ needs.Create_Staging_PR.outputs.branch_name }}
