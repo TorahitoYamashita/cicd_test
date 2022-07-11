@@ -39,6 +39,7 @@ jobs:
           payload: |
             {
               "url": "${{ steps.cpr.outputs.pull-request-url }}",
+              "what_pr": "Sync Dev",
               "operation": "${{ steps.cpr.outputs.pull-request-operation }}"
             }
         env:
