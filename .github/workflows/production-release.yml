@@ -28,9 +28,11 @@ jobs:
         run: |
           git fetch origin dev:dev
           git reset --hard dev
-          
-      - name: Uncommitted change
-        run: date +%s > report.txt
+
+      - name: Create tag
+        run: |
+          git tag v22.27.2
+          git push --tags
 
       - name: Create Pull Request
         id: cpr
