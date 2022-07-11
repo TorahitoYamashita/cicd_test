@@ -19,7 +19,7 @@ on:
         required: true  
 
 env: 
-  testing_env: placeHolder
+  testing_env: "placeHolder"
 
 jobs:  
   Create_Staging_PR:
