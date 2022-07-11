@@ -101,11 +101,11 @@ jobs:
           token: ${{ secrets.PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
-      - name: call-workflow-passing-data
-        uses: TorahitoYamashita/cicd_test/.github/workflows/reusable-workflow.yml@main
-        with:
-          branch_name: ${{ steps.vars.outputs.branch_name }}
-          version_bump: ${{ github.event.inputs.versionBump }}
+      # - name: call-workflow-passing-data
+      #   uses: TorahitoYamashita/cicd_test/.github/workflows/reusable-workflow.yml@main
+      #   with:
+      #     branch_name: ${{ steps.vars.outputs.branch_name }}
+      #     version_bump: ${{ github.event.inputs.versionBump }}
       
       - name: Dump GitHub context
         env:
