@@ -1,10 +1,10 @@
-name: CI
+name: Dev to Staging Release
 
 on:
   workflow_dispatch:
     inputs:
       weeklyReleaseNumber:
-        description: 'Number of release this week'
+        description: 'Number of the release of the week'
         required: true
       versionBump:
         description: |
@@ -18,6 +18,12 @@ on:
           pre-release (1.1.1-beta.1)
         required: true  
 
+env: 
+  YEAR_AND_WEEK: "$(date +"%y.%U.")"
+  VERSION: ${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}
+  BRANCH_NAME: "rel/${VERSION}"          
+  PR_TITLE: "chore: release ${VERSION}"          
+
 jobs:  
   build:
     runs-on: ubuntu-latest
@@ -30,15 +36,15 @@ jobs:
       - name: debug
         uses: hmarr/debug-action@v2
 
-      - name: Prepare BRANCH_NAME and PR_TITLE
-        id: vars
-        run: |
-          YEAR_AND_WEEK="$(date +"%y.%U.")"
-          VERSION=${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}
-          export BRANCH_NAME BRANCH_NAME="rel/${VERSION}"          
-          export PR_TITLE PR_TITLE="chore: release ${VERSION}"          
-          echo ::set-output name=branch_name::${BRANCH_NAME}
-          echo ::set-output name=pr_title::${PR_TITLE}
+      # - name: Prepare BRANCH_NAME and PR_TITLE
+      #   id: vars
+      #   run: |
+      #     YEAR_AND_WEEK="$(date +"%y.%U.")"
+      #     VERSION=${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}
+      #     export BRANCH_NAME BRANCH_NAME="rel/${VERSION}"          
+      #     export PR_TITLE PR_TITLE="chore: release ${VERSION}"          
+      #     echo ::set-output name=branch_name::${BRANCH_NAME}
+      #     echo ::set-output name=pr_title::${PR_TITLE}
 
       - name: Reset promotion branch
         run: |
@@ -59,10 +65,14 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.PAT }}
-          title: ${{ steps.vars.outputs.pr_title }}          
-          body: ${{ steps.vars.outputs.pr_title }}
-          commit-message: ${{ steps.vars.outputs.pr_title }}
-          branch: ${{ steps.vars.outputs.branch_name }}
+          title: ${{ env.PR_TITLE }}          
+          body: ${{ env.PR_TITLE }}
+          commit-message: ${{ env.PR_TITLE }}
+          # title: ${{ steps.vars.outputs.pr_title }}          
+          # body: ${{ steps.vars.outputs.pr_title }}
+          # commit-message: ${{ steps.vars.outputs.pr_title }}
+          branch: ${{env.BRANCH_NAME}}
+          # branch: ${{ steps.vars.outputs.branch_name }}
           delete-branch: true
           base: main
           assignees: ${{ github.actor }}
@@ -72,7 +82,6 @@ jobs:
         id: slack
         uses: slackapi/slack-github-action@v1.19.0
         with:
-          # This data can be any valid JSON from a previous step in the GitHub Action
           payload: |
             {
               "url": "${{ steps.cpr.outputs.pull-request-url }}",
