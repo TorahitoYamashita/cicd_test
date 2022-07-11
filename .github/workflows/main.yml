@@ -40,7 +40,7 @@ jobs:
           export PR_TITLE PR_TITLE="chore: release ${VERSION}"
           echo ::set-output name=branch_name::${BRANCH_NAME}
           echo ::set-output name=pr_title::${PR_TITLE}
-          $testing_env = "changed"
+          ${{ env.testing_env }} = "changed"
 
       - name: Reset promotion branch
         run: |
