@@ -1,0 +1,57 @@
+name: Reusable workflow example
+
+on:
+  workflow_call:
+    inputs:
+      branch_name:
+        required: true
+        type: string
+      version_bump:
+        required: true
+        type: string
+
+
+jobs:
+  Create PR to Sync Dev:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Make changes to pull request
+        run: |
+          npm i -g @jsdevtools/version-bump-prompt
+          bump ${{ inputs.version_bump }}
+          npm i -g conventional-changelog-cli
+          conventional-changelog -p angular -i CHANGELOG.md -s
+          
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT }}
+          title: "chore: sync bump version and changelog"
+          branch: ${{ inputs.branch_name }}
+          delete-branch: true
+          assignees: ${{ github.actor }}
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+
+      - name: Send custom JSON data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          payload: |
+            {
+              "url": "${{ steps.cpr.outputs.pull-request-url }}",
+              "operation": "${{ steps.cpr.outputs.pull-request-operation }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # - name: Enable Pull Request Automerge
+      #   id: mergeeeee
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: peter-evans/enable-pull-request-automerge@v2
+      #   with:
+      #     token: ${{ secrets.PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
