@@ -22,8 +22,8 @@ jobs:
   Create_Staging_PR:
     runs-on: ubuntu-latest
 
-    # outputs:
-    #   test-result: ${{ steps.set_outputs.outputs.test-result }}
+    outputs:
+      test-result: ${{ steps.set_outputs.outputs.branch_name }}
 
     steps:
       - uses: actions/checkout@v3
