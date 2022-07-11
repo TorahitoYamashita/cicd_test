@@ -135,7 +135,6 @@ jobs:
           echo "$STEPS_CONTEXT"
 
   call-workflow-passing-data:
-    runs-on: ubuntu-latest
     uses: ./.github/workflows/reusable-workflow.yml
     with:
       version_bump: ${{ github.event.inputs.versionBump }}
