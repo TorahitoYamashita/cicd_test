@@ -138,4 +138,5 @@ jobs:
     uses: ./.github/workflows/reusable-workflow.yml
     with:
       version_bump: ${{ github.event.inputs.versionBump }}
+    secrets: inherit
 

@@ -25,7 +25,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
-          # token: ${{ secrets.PAT }}
+          token: ${{ secrets.PAT }}
           title: "chore: sync bump version and changelog"
           branch: "sync_dev"
           delete-branch: true
