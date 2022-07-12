@@ -33,5 +33,5 @@ jobs:
           release_title: ${{ steps.tag-data.outputs.git-tag-annotation }}
           release_text: ${{ steps.tag-data.outputs.git-tag-annotation }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
 
