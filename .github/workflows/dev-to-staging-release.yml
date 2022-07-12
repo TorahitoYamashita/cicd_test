@@ -89,19 +89,12 @@ jobs:
       #   run: |
       #     echo "Pull request ${{ steps.automerge.outputs.pullRequestNumber }} merged!"
           
-      - name: Auto approve
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: juliangruber/approve-pull-request-action@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.cpr.outputs.pull-request-number }}
-                    
-      - name: Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v2
-        with:
-          token: ${{ secrets.PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      # - name: Pull Request Automerge
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: peter-evans/enable-pull-request-automerge@v2
+      #   with:
+      #     token: ${{ secrets.PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
       
       - name: Dump GitHub context
         env:
