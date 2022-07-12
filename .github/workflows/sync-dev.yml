@@ -1,4 +1,4 @@
-name: Reusable workflow example
+name: Sync Dev
 
 on:
   workflow_call:
@@ -8,13 +8,14 @@ on:
         type: string
 
 jobs:
-  Create_PR_to_Sync_Dev:
+  Create_Sync_Dev_PR:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Make changes to pull request
+      - name: Bump Version and Add Change Log
         run: |
           npm i -g @jsdevtools/version-bump-prompt
           bump ${{ inputs.version_bump }}
@@ -32,7 +33,7 @@ jobs:
           assignees: ${{ github.actor }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
 
-      - name: Send custom JSON data to Slack workflow
+      - name: Slack Notification
         id: slack
         uses: slackapi/slack-github-action@v1.19.0
         with:
