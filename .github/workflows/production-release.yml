@@ -116,5 +116,5 @@ jobs:
   call-workflow-passing-data:
     uses: ./.github/workflows/release-tag.yml
     with:
-      tag: ${{ needs.Create_Production_PR.outputs.output2 }}
+      tag: ${{ needs.Create_Production_PR.outputs.output1 }}
     secrets: inherit
