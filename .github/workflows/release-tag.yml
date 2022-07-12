@@ -1,40 +1,22 @@
 name: Release Tag
 
-# on:
-#   push:
-#     tags:
-#       - "v[0-9]+.[0-9]+.[0-9]+"
 on:
-  workflow_call:
-    inputs:
-      tag:
-        required: true
-        type: string
-
+  push:
+    branches:
+      - main
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Kore
-        run: |
-          echo ${{ inputs.tag }}
-      - uses: actions/checkout@v3
-      - name: "Refresh tags"
-        id: tag
-        run: git fetch --tags --force # Is currently required for v3 due to https://github.com/actions/checkout/issues/290
-      - uses: ericcornelissen/git-tag-annotation-action@v2
-        id: tag-data
-
-      - name: Logginggg
-        run: |
-          echo ${{ steps.tag-data.outputs.git-tag-annotation }}
-
-      - name: Create GitHub release
-        uses: Roang-zero1/github-create-release-action@v2
+      - uses: actions/checkout@v2
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.0
         with:
-          version_regex: ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+
-          release_title: ${{ steps.tag-data.outputs.git-tag-annotation }}
-          release_text: ${{ steps.tag-data.outputs.git-tag-annotation }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
-
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}

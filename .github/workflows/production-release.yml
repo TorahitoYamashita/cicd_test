@@ -113,32 +113,23 @@ jobs:
       - name: Dooooo
         run: echo ${{ needs.Create_Production_PR.outputs.output1 }}
 
-  release:
-    runs-on: ubuntu-latest
-    needs: Create_Production_PR
-    steps:
-      - name: Kore
-        run: |
-          echo ${{ needs.Create_Production_PR.outputs.output1 }}
-          echo ${{ needs.Create_Production_PR.outputs.output2 }}
-      - uses: actions/checkout@v3
-      # - name: "Refresh tags"
-      #   id: tag
-      #   run: git fetch --tags --force # Is currently required for v3 due to https://github.com/actions/checkout/issues/290
-      # - uses: ericcornelissen/git-tag-annotation-action@v2
-      #   id: tag-data
+  # release:
+  #   runs-on: ubuntu-latest
+  #   needs: Create_Production_PR
+  #   steps:
+  #     - name: Kore
+  #       run: |
+  #         echo ${{ needs.Create_Production_PR.outputs.output1 }}
+  #         echo ${{ needs.Create_Production_PR.outputs.output2 }}
+  #     - uses: actions/checkout@v3
 
-      # - name: Logginggg
-      #   run: |
-      #     echo ${{ steps.tag-data.outputs.git-tag-annotation }}
-
-      - name: Create GitHub release
-        uses: Roang-zero1/github-create-release-action@v2
-        with:
-          version_regex: ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+
-          release_title: ${{ needs.Create_Production_PR.outputs.output2 }}
-          release_text: ${{ needs.Create_Production_PR.outputs.output2 }}
-          created_tag: ${{ needs.Create_Production_PR.outputs.output2 }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+  #     - name: Create GitHub release
+  #       uses: Roang-zero1/github-create-release-action@v2
+  #       with:
+  #         version_regex: ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+
+  #         release_title: ${{ needs.Create_Production_PR.outputs.output2 }}
+  #         release_text: ${{ needs.Create_Production_PR.outputs.output2 }}
+  #         created_tag: ${{ needs.Create_Production_PR.outputs.output2 }}
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.PAT }}
 
