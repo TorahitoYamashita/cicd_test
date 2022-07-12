@@ -26,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: staging
+          ref: dev
 
       - name: Prepare BRANCH_NAME and PR_TITLE
         id: vars
@@ -38,10 +38,10 @@ jobs:
           echo ::set-output name=branch_name::${BRANCH_NAME}
           echo ::set-output name=pr_title::${PR_TITLE}
 
-      - name: Reset Promotion Branch
-        run: |
-          git fetch origin dev:dev
-          git reset --hard dev
+      # - name: Reset Promotion Branch
+      #   run: |
+      #     git fetch origin dev:dev
+      #     git reset --hard dev
 
       - name: Bump Version and Add Change Log
         run: |
