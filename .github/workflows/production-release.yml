@@ -11,24 +11,38 @@ jobs:
   Create_Production_PR:
     runs-on: ubuntu-latest
 
+    outputs:
+      output1: ${{ steps.step1.outputs.test }}
+      output2: ${{ steps.vars.outputs.tag }}
+      
     steps:
       - uses: actions/checkout@v3
         with:
           ref: main
 
+      - id: step1
+        run: echo "::set-output name=test::hello"
+        
       - name: Prepare BRANCH_NAME and PR_TITLE
         id: vars
         run: |
           YEAR_AND_WEEK="$(date +"%y.%U.")"
           VERSION=${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}
           export PR_TITLE PR_TITLE="chore: release ${VERSION}"
+          export TAG TAG="v${VERSION}"
           echo ::set-output name=pr_title::${PR_TITLE}
+          echo "::set-output name=tag::${TAG}"
 
       - name: Reset promotion branch
         run: |
           git fetch origin dev:dev
           git reset --hard dev
-          
+
+      - name: Create tag
+        run: |
+          git tag ${{ steps.vars.outputs.tag }}
+          git push --tags
+
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v4
@@ -55,32 +69,14 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-      # - id: automerge
-      #   name: automerge
-      #   uses: "pascalgn/automerge-action@v0.15.3"
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     PULL_REQUEST: ${{ steps.cpr.outputs.pull-request-number }}
-
-      # - name: feedback
-      #   if: ${{ steps.automerge.outputs.mergeResult }} == "merged"
-      #   run: |
-      #     echo "Pull request ${{ steps.automerge.outputs.pullRequestNumber }} merged!"
           
-      - name: Enable Pull Request Automerge
-        id: mergeeeee
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v2
-        with:
-          token: ${{ secrets.PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-
-      # - name: call-workflow-passing-data
-      #   uses: TorahitoYamashita/cicd_test/.github/workflows/reusable-workflow.yml@main
+      # - name: Enable Pull Request Automerge
+      #   id: mergeeeee
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: peter-evans/enable-pull-request-automerge@v2
       #   with:
-      #     branch_name: ${{ steps.vars.outputs.branch_name }}
-      #     version_bump: ${{ github.event.inputs.versionBump }}
+      #     token: ${{ secrets.PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
       
       - name: Dump GitHub context
         env:
@@ -108,4 +104,32 @@ jobs:
       - name: Dump matrix context
         env:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"          
+        run: echo "$MATRIX_CONTEXT"
+
+  job2:
+    runs-on: ubuntu-latest
+    needs: Create_Production_PR
+    steps:
+      - name: Dooooo
+        run: echo ${{ needs.Create_Production_PR.outputs.output1 }}
+
+  # release:
+  #   runs-on: ubuntu-latest
+  #   needs: Create_Production_PR
+  #   steps:
+  #     - name: Kore
+  #       run: |
+  #         echo ${{ needs.Create_Production_PR.outputs.output1 }}
+  #         echo ${{ needs.Create_Production_PR.outputs.output2 }}
+  #     - uses: actions/checkout@v3
+
+  #     - name: Create GitHub release
+  #       uses: Roang-zero1/github-create-release-action@v2
+  #       with:
+  #         version_regex: ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+
+  #         release_title: ${{ needs.Create_Production_PR.outputs.output2 }}
+  #         release_text: ${{ needs.Create_Production_PR.outputs.output2 }}
+  #         created_tag: ${{ needs.Create_Production_PR.outputs.output2 }}
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.PAT }}
+
