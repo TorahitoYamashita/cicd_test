@@ -6,15 +6,18 @@ name: Release Tag
 #       - "v[0-9]+.[0-9]+.[0-9]+"
 on:
   workflow_call:
-    # inputs:
-    #   tag:
-    #     required: true
-    #     type: string
+    inputs:
+      tag:
+        required: true
+        type: string
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - name: Kore
+        run: |
+          echo ${{ inputs.tag }}
       - uses: actions/checkout@v3
       - name: "Refresh tags"
         id: tag

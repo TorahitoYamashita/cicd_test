@@ -13,6 +13,7 @@ jobs:
 
     outputs:
       output1: ${{ steps.step1.outputs.test }}
+      output2: ${{ steps.vars.outputs.tag }}
       
     steps:
       - uses: actions/checkout@v3
@@ -114,6 +115,6 @@ jobs:
 
   call-workflow-passing-data:
     uses: ./.github/workflows/release-tag.yml
-    # with:
-    #   tag: ${{ github.event.inputs.versionBump }}
+    with:
+      tag: ${{ needs.Create_Production_PR.outputs.output2 }}
     secrets: inherit
