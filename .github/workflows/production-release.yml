@@ -109,8 +109,9 @@ jobs:
     runs-on: 
     needs: Create_Production_PR
     steps:
-      - run: echo ${{ needs.Create_Production_PR.outputs.output1 }}
-      
+      - name: Dooooo
+        run: echo ${{ needs.Create_Production_PR.outputs.output1 }}
+
   call-workflow-passing-data:
     uses: ./.github/workflows/release-tag.yml
     # with:
