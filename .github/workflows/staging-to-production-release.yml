@@ -8,22 +8,19 @@ on:
         required: true
 
 jobs:  
-  Create_Production_PR:
+  Create_Production_Release_PR:
     runs-on: ubuntu-latest
 
     outputs:
-      output1: ${{ steps.step1.outputs.test }}
       output2: ${{ steps.vars.outputs.tag }}
       
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           ref: main
-
-      - id: step1
-        run: echo "::set-output name=test::hello"
         
-      - name: Prepare BRANCH_NAME and PR_TITLE
+      - name: Prepare TAG and PR_TITLE
         id: vars
         run: |
           YEAR_AND_WEEK="$(date +"%y.%U.")"
@@ -33,12 +30,12 @@ jobs:
           echo ::set-output name=pr_title::${PR_TITLE}
           echo "::set-output name=tag::${TAG}"
 
-      - name: Reset promotion branch
+      - name: Reset Promotion Branch
         run: |
-          git fetch origin dev:dev
-          git reset --hard dev
+          git fetch origin staging:staging
+          git reset --hard staging
 
-      - name: Create tag
+      - name: Create Tag
         run: |
           git tag ${{ steps.vars.outputs.tag }}
           git push --tags
@@ -57,14 +54,14 @@ jobs:
           assignees: ${{ github.actor }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
 
-      - name: Send custom JSON data to Slack workflow
+      - name: Slack Notification
         id: slack
         uses: slackapi/slack-github-action@v1.19.0
         with:
           payload: |
             {
               "url": "${{ steps.cpr.outputs.pull-request-url }}",
-              "what_pr": "Dev to Staging release",
+              "what_pr": "Staging to Production release",
               "operation": "${{ steps.cpr.outputs.pull-request-operation }}"
             }
         env:
@@ -105,13 +102,6 @@ jobs:
         env:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"
-
-  job2:
-    runs-on: ubuntu-latest
-    needs: Create_Production_PR
-    steps:
-      - name: Dooooo
-        run: echo ${{ needs.Create_Production_PR.outputs.output1 }}
 
   # release:
   #   runs-on: ubuntu-latest
