@@ -117,8 +117,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Kore
-        run: |
-          echo ${{ needs.Create_Production_PR.outputs.output2 }}
+        run: echo ${{ needs.Create_Production_PR.outputs.output1 }}
       - uses: actions/checkout@v3
       # - name: "Refresh tags"
       #   id: tag
