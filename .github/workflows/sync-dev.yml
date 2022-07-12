@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: dev
 
       - name: Bump Version and Add Change Log
         run: |
@@ -30,6 +32,7 @@ jobs:
           title: "chore: sync bump version and changelog"
           branch: "sync_dev"
           delete-branch: true
+          base: dev
           assignees: ${{ github.actor }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
 
@@ -46,10 +49,9 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      # - name: Enable Pull Request Automerge
-      #   id: mergeeeee
-      #   if: steps.cpr.outputs.pull-request-operation == 'created'
-      #   uses: peter-evans/enable-pull-request-automerge@v2
-      #   with:
-      #     token: ${{ secrets.PAT }}
-      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
+      - name: Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v2
+        with:
+          token: ${{ secrets.PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }} 
