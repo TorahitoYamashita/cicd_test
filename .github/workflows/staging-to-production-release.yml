@@ -105,11 +105,11 @@ jobs:
 
   Release_Tag:
     runs-on: ubuntu-latest
-    needs: Create_Production_PR
+    needs: Create_Production_Release_PR
     steps:
       - name: Kore
         run: |
-          echo ${{ needs.Create_Production_PR.outputs.output2 }}
+          echo ${{ needs.Create_Production_Release_PR.outputs.output2 }}
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -117,5 +117,5 @@ jobs:
       - name: Create a GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ needs.Create_Production_PR.outputs.output2 }}
-          name: ${{ needs.Create_Production_PR.outputs.output2 }}
+          tag: ${{ needs.Create_Production_Release_PR.outputs.output2 }}
+          name: ${{ needs.Create_Production_Release_PR.outputs.output2 }}
