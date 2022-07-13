@@ -1,4 +1,4 @@
-## [3.0.1](https://github.com/TorahitoYamashita/cicd_test/compare/v22.28.19...v3.0.1) (2022-07-13)
+## 3.0.1 (2022-07-13)
 
 
 
