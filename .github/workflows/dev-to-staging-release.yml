@@ -32,10 +32,10 @@ jobs:
         id: package
         uses: juliangruber/read-file-action@v1
         with:
-          path: ./package.json
+          path: ./a.txt
       - name: Echo package.json
         run: echo "${{ steps.package.outputs.content }}"
-        
+
       - name: Prepare BRANCH_NAME and PR_TITLE
         id: vars
         run: |
