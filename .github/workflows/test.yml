@@ -13,18 +13,21 @@ jobs:
         with:
           ref: dev
 
-      - name: Add file
+      - name: Create commits
         run: |
-          git checkout -b testing-branch
-          touch new.md
-          git add .
-          git commit -m "add file"
-          git push
+          git config user.name 'TorahitoYamashita'
+          git config user.email 'ho.moko.niki@gmail.com'
+          date +%s > report.txt
+          git commit -am "Modify tracked file during workflow"
+          date +%s > new-report.txt
+          git add -A
+          git commit -m "Add untracked file during workflow"
+      - name: Uncommitted change
+        run: date +%s > report.txt
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: "testing-branch"
           destination_branch: "dev"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
