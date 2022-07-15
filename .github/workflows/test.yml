@@ -17,6 +17,8 @@ jobs:
         run: |
           touch new.md
           git add .
+          git commit -m "add file"
+          git push
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
