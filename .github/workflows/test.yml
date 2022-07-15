@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: testing-branch
+          ref: dev
 
       - name: Add file
         run: |
