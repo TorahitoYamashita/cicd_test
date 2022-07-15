@@ -19,11 +19,11 @@ jobs:
           git config user.email 'ho.moko.niki@gmail.com'
           date +%s > report.txt
           git commit -am "Modify tracked file during workflow"
-          date +%s > new-report.txt
-          git add -A
-          git commit -m "Add untracked file during workflow"
-      - name: Uncommitted change
-        run: date +%s > report.txt
+      #     date +%s > new-report.txt
+      #     git add -A
+      #     git commit -m "Add untracked file during workflow"
+      # - name: Uncommitted change
+      #   run: date +%s > report.txt
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
