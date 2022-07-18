@@ -13,21 +13,35 @@ jobs:
         with:
           ref: dev
 
-      - name: Create commits
-        run: |
-          git config user.name 'TorahitoYamashita'
-          git config user.email 'ho.moko.niki@gmail.com'
-          git checkout -b testing-branch
-          date +%s > report.txt
-          git add -A
-          git commit -m "Add untracked file during workflow"
-
-      - name: pull-request
-        uses: repo-sync/pull-request@v2
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
         with:
-          # source_branch: "dev"
-          destination_branch: "staging"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # token: ${{ secrets.PAT }}
+          # title: ${{ steps.vars.outputs.pr_title }}
+          # body: ${{ steps.vars.outputs.pr_title }}
+          # commit-message: ${{ steps.vars.outputs.pr_title }}
+          # branch: ${{ steps.vars.outputs.branch_name }}
+          delete-branch: true
+          base: staging
+          # assignees: ${{ github.actor }}
+          # author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+
+      # - name: Create commits
+      #   run: |
+      #     git config user.name 'TorahitoYamashita'
+      #     git config user.email 'ho.moko.niki@gmail.com'
+      #     git checkout -b testing-branch
+      #     date +%s > report.txt
+      #     git add -A
+      #     git commit -m "Add untracked file during workflow"
+
+      # - name: pull-request
+      #   uses: repo-sync/pull-request@v2
+      #   with:
+      #     # source_branch: "dev"
+      #     destination_branch: "staging"
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Dump GitHub context
         env:
