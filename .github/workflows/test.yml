@@ -25,15 +25,9 @@ jobs:
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: "testing-branch"
-          destination_branch: "dev"
+          # source_branch: "dev"
+          destination_branch: "staging"
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
-
-
-
-
-          
 
       - name: Dump GitHub context
         env:
