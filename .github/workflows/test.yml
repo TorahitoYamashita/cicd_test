@@ -11,21 +11,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: dev
+          ref: staging
 
+      - name: Reset promotion branch
+        run: |
+          git fetch origin dev:dev
+          git reset --hard dev
       - name: Create Pull Request
-        id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
-          # token: ${{ secrets.PAT }}
-          # title: ${{ steps.vars.outputs.pr_title }}
-          # body: ${{ steps.vars.outputs.pr_title }}
-          # commit-message: ${{ steps.vars.outputs.pr_title }}
-          # branch: ${{ steps.vars.outputs.branch_name }}
-          delete-branch: true
-          base: staging
-          # assignees: ${{ github.actor }}
-          # author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          branch: production-promotion
 
       # - name: Create commits
       #   run: |
