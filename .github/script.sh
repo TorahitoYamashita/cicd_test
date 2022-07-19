@@ -2,7 +2,7 @@
 pwd
 ls
 
-cat "./.github/manifest.txt"
+cat "./manifest.txt"
 YEAR_AND_WEEK="$(date +"%y.%U.")"
 
 IFS='.' read -ra ADDR <<< $1
@@ -21,10 +21,10 @@ fi
 
 echo ${VERSION}
 
-cat "./.github/manifest.txt"
+cat "./manifest.txt"
 
-echo ${VERSION} > "./.github/manifest.txt"
+echo ${VERSION} > "./manifest.txt"
 
-cat "./.github/manifest.txt"
+cat "./manifest.txt"
 
 
