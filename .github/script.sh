@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Ran!!!!"
 echo $1
 

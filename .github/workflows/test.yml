@@ -52,7 +52,7 @@ jobs:
         shell: bash
         run: |
           # run script
-          sh ./.github/script.sh "${{ steps.package.outputs.content }}"
+          ./.github/script.sh "${{ steps.package.outputs.content }}"
 
 
 
