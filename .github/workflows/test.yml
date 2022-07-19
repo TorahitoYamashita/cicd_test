@@ -46,16 +46,13 @@ jobs:
           path: ./manifest.txt
       - name: Echo Manifest File
         run: echo "${{ steps.package.outputs.content }}"
+      - name: lsssss
+        run: ls -a
       - name: Split Manifest File
         shell: bash
         run: |
-          # make file runnable, might not be necessary
-          chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"
-
           # run script
-          IFS='.' read -ra ADDR <<< ${{ steps.package.outputs.content }}
-          echo ${ADDR[@][0]}
-          # sh ${GITHUB_WORKSPACE}/.github/script.sh "${{ steps.package.outputs.content }}"
+          sh ./.github/script.sh "${{ steps.package.outputs.content }}"
 
 
 

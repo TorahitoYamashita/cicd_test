@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 echo "Ran!!!!"
 echo $1
 
