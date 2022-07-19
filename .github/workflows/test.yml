@@ -6,9 +6,9 @@ on:
 jobs:  
   Create_Staging_Release_PR:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
+    # defaults:
+    #   run:
+    #     shell: bash
 
     steps:
       - name: Checkout
@@ -16,14 +16,31 @@ jobs:
         # with:
         #   ref: staging
 
-      # - name: Reset promotion branch
-      #   run: |
-      #     git fetch origin dev:dev
-      #     git reset --hard dev
-      # - name: Create Pull Request
-      #   uses: peter-evans/create-pull-request@v4
-      #   with:
-      #     branch: production-promotion
+      - name: Reset promotion branch
+        run: |
+          git fetch origin dev:dev
+          git reset --hard dev
+
+      - name: Read Manifest File
+        id: package
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./manifest.txt
+      - name: Echo Manifest File
+        run: echo "${{ steps.package.outputs.content }}"
+      - name: lsssss
+        run: ls -a
+      - name: Split Manifest File
+        run: |
+          chmod +x ./.github/script.sh
+          ./.github/script.sh "${{ steps.package.outputs.content }}"
+
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          branch: production-promotion
+          base: staging
 
       # - name: Create commits
       #   run: |
@@ -42,24 +59,8 @@ jobs:
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
 
 
-      - name: Read Manifest File
-        id: package
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./manifest.txt
-      - name: Echo Manifest File
-        run: echo "${{ steps.package.outputs.content }}"
-      - name: lsssss
-        run: ls -a
-      - name: Split Manifest File
-        id: ss
-        shell: bash
-        run: |
-          # run script
-          chmod +x ./.github/script.sh
-          ./.github/script.sh "${{ steps.package.outputs.content }}"
-      - name: outputs
-        run: echo "${{ toJson(steps.ss.outputs) }}"
+
+
 
 
 

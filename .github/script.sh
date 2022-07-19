@@ -1,13 +1,23 @@
 #!/bin/bash
 
-echo "Ran!!!!"
-echo $1
+YEAR_AND_WEEK="$(date +"%y.%U.")"
 
 IFS='.' read -ra ADDR <<< $1
-echo ${ADDR[@]}
-echo ${ADDR[0]}
-echo ${ADDR[1]}
 echo ${ADDR[2]}
-# for i in "${ADDR[@]}"; do
-#     echo "$i"
-# done
+
+YEAR="$(date +"%y")"
+WEEK="$(date +"%U")"
+
+if [ "$WEEK" = "${ADDR[2]}" ]; then
+    echo "Same week."
+    VERSION=${YEAR_AND_WEEK}$((${ADDR[2]} + 1))
+else
+    echo "Next week."
+    VERSION=${YEAR_AND_WEEK}1
+fi
+
+echo ${VERSION}
+
+echo ${VERSION} > "../manifest.txt"
+
+
