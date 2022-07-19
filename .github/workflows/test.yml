@@ -48,10 +48,13 @@ jobs:
         run: echo "${{ steps.package.outputs.content }}"
       - name: Split Manifest File
         run: |
-          IFS='.' read -ra ADDR <<< ${{ steps.package.outputs.content }}
-          for i in "${ADDR[@]}"; do
-            Echo "$i"
-          done
+          # make file runnable, might not be necessary
+          chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"
+
+          # run script
+          "${GITHUB_WORKSPACE}/.github/script.sh"
+
+
 
       - name: Dump GitHub context
         env:
