@@ -52,11 +52,14 @@ jobs:
       - name: lsssss
         run: ls -a
       - name: Split Manifest File
+        id: ss
         shell: bash
         run: |
           # run script
           chmod +x ./.github/script.sh
           ./.github/script.sh "${{ steps.package.outputs.content }}"
+      - name: outputs
+        run: echo "${{ steps.ss.outputs }}"
 
 
 
