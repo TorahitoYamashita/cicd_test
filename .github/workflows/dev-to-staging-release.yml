@@ -2,21 +2,21 @@ name: Dev to Staging Release
 
 on:
   workflow_dispatch:
-    inputs:
-      weeklyReleaseNumber:
-        description: 'Number of the release of the week'
-        required: true
-      versionBump:
-        description: |
-          How would you like to bump the version?
-          major (2.0.0) |
-          minor (1.2.0) |
-          patch (1.1.1) |
-          pre-release major (2.0.0-beta.1) |
-          pre-release minor (1.2.0-beta.1) |
-          pre-release patch (1.1.1-beta.1) |
-          pre-release (1.1.1-beta.1)
-        required: true  
+    # inputs:
+    #   weeklyReleaseNumber:
+    #     description: 'Number of the release of the week'
+    #     required: true
+    #   versionBump:
+    #     description: |
+    #       How would you like to bump the version?
+    #       major (2.0.0) |
+    #       minor (1.2.0) |
+    #       patch (1.1.1) |
+    #       pre-release major (2.0.0-beta.1) |
+    #       pre-release minor (1.2.0-beta.1) |
+    #       pre-release patch (1.1.1-beta.1) |
+    #       pre-release (1.1.1-beta.1)
+    #     required: true  
 
 jobs:  
   Create_Staging_Release_PR:
@@ -28,13 +28,19 @@ jobs:
         with:
           ref: staging
 
-      - name: Read package.json
+      - name: Read Manifest File
         id: package
         uses: juliangruber/read-file-action@v1
         with:
-          path: ./a.txt
+          path: ./manifest
       - name: Echo package.json
         run: echo "${{ steps.package.outputs.content }}"
+      - name: Echo package.json
+        run: |
+          IFS='.' read -ra ADDR <<< ${{ steps.package.outputs.content }}
+          for i in "${ADDR[@]}"; do
+            Echo "$i"
+          done
 
       - name: Prepare BRANCH_NAME and PR_TITLE
         id: vars

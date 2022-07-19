@@ -13,14 +13,14 @@ jobs:
         with:
           ref: staging
 
-      - name: Reset promotion branch
-        run: |
-          git fetch origin dev:dev
-          git reset --hard dev
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
-        with:
-          branch: production-promotion
+      # - name: Reset promotion branch
+      #   run: |
+      #     git fetch origin dev:dev
+      #     git reset --hard dev
+      # - name: Create Pull Request
+      #   uses: peter-evans/create-pull-request@v4
+      #   with:
+      #     branch: production-promotion
 
       # - name: Create commits
       #   run: |
@@ -37,6 +37,21 @@ jobs:
       #     # source_branch: "dev"
       #     destination_branch: "staging"
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: Read Manifest File
+        id: package
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./manifest
+      - name: Echo Manifest File
+        run: echo "${{ steps.package.outputs.content }}"
+      - name: Split Manifest File
+        run: |
+          IFS='.' read -ra ADDR <<< ${{ steps.package.outputs.content }}
+          for i in "${ADDR[@]}"; do
+            Echo "$i"
+          done
 
       - name: Dump GitHub context
         env:
