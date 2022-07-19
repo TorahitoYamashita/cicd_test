@@ -43,7 +43,7 @@ jobs:
         id: package
         uses: juliangruber/read-file-action@v1
         with:
-          path: ./manifest
+          path: ./manifest.txt
       - name: Echo Manifest File
         run: echo "${{ steps.package.outputs.content }}"
       - name: Split Manifest File
