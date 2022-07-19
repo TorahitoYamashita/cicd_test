@@ -52,7 +52,7 @@ jobs:
           chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"
 
           # run script
-          "${GITHUB_WORKSPACE}/.github/script.sh {{ steps.package.outputs.content }}"
+          sh ${GITHUB_WORKSPACE}/.github/script.sh {{ steps.package.outputs.content }}
 
 
 
