@@ -55,7 +55,8 @@ jobs:
         shell: bash
         run: |
           # run script
-          bash ./.github/script.sh "${{ steps.package.outputs.content }}"
+          chmod +x ./.github/script.sh
+          ./.github/script.sh "${{ steps.package.outputs.content }}"
 
 
 
