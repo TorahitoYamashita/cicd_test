@@ -52,7 +52,9 @@ jobs:
           chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"
 
           # run script
-          sh ${GITHUB_WORKSPACE}/.github/script.sh "${{ steps.package.outputs.content }}"
+          IFS='.' read -ra ADDR <<< ${{ steps.package.outputs.content }}
+          echo ${ADDR[@][0]}
+          # sh ${GITHUB_WORKSPACE}/.github/script.sh "${{ steps.package.outputs.content }}"
 
 
 
