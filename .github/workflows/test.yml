@@ -47,6 +47,7 @@ jobs:
       - name: Echo Manifest File
         run: echo "${{ steps.package.outputs.content }}"
       - name: Split Manifest File
+        shell: bash
         run: |
           # make file runnable, might not be necessary
           chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"
