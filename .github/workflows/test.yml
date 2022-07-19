@@ -59,7 +59,7 @@ jobs:
           chmod +x ./.github/script.sh
           ./.github/script.sh "${{ steps.package.outputs.content }}"
       - name: outputs
-        run: echo "${{ steps.ss.outputs }}"
+        run: echo "${{ toJson(steps.ss.outputs) }}"
 
 
 
