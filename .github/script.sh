@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 echo "Ran!!!!"
-# IFS='.' read -ra ADDR <<< ${{ steps.package.outputs.content }}
-# for i in "${ADDR[@]}"; do
-# Echo "$i"
-# done
+echo $1
+
+IFS='.' read -ra ADDR <<< $1
+for i in "${ADDR[@]}"; do
+    echo "$i"
+done
