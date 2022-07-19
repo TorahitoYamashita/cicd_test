@@ -21,10 +21,12 @@ fi
 
 echo ${VERSION}
 
+echo "before 1"
 cat "./manifest.txt"
+echo "after 1"
 
 echo ${VERSION} > "./manifest.txt"
 
+echo "before 2"
 cat "./manifest.txt"
-
-
+echo "after 2"
