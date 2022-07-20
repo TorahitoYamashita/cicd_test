@@ -25,7 +25,7 @@ jobs:
         id: package
         uses: juliangruber/read-file-action@v1
         with:
-          path: ./manifest.txt
+          path: ./manifest
       - name: Echo Manifest File
         run: echo "${{ steps.package.outputs.content }}"
       - name: lsssss

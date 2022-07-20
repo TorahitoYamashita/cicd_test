@@ -4,10 +4,10 @@ set -ex
 
 pwd
 ls -a
-cat "./manifest.txt"
+cat "./manifest"
 
 if [ -z "$1" ]; then
-    echo 'ERROR: Missing input variable!'
+    echo 'ERROR: Missing version from manifest file!'
     exit 1
 fi
 
@@ -26,11 +26,11 @@ fi
 
 echo ${VERSION}
 echo "before 1"
-cat "./manifest.txt"
+cat "./manifest"
 echo "after 1"
 
-echo ${VERSION} > "./manifest.txt"
+echo ${VERSION} > "./manifest"
 
 echo "before 2"
-cat "./manifest.txt"
+cat "./manifest"
 echo "after 2"
