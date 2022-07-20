@@ -18,7 +18,7 @@ IFS='.' read -ra ARRAY <<< $1
 
 if [ "$WEEK" = "${ARRAY[1]}" ]; then
     echo 'same week'
-    VERSION=${YEAR_AND_WEEK}$((${ARRAY[1]} + 1))
+    VERSION=${YEAR_AND_WEEK}$((${ARRAY[2]} + 1))
 else
     echo 'next week'
     VERSION=${YEAR_AND_WEEK}1
