@@ -2,6 +2,10 @@
 
 set -ex
 
+pwd
+ls -a
+cat "./manifest.txt"
+
 if [ -z "$1" ]; then
     echo 'ERROR: Missing input variable!'
     exit 1
