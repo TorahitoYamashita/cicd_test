@@ -16,10 +16,24 @@ jobs:
         with:
           ref: staging
 
+      - name: checkingggbefore
+        run: |
+          echo "-------"
+          pwd
+          ls -a
+          echo "-------"
+
       - name: Reset promotion branch
         run: |
           git fetch origin dev:dev
           git reset --hard dev
+
+      - name: checkingggafter
+        run: |
+          echo "-------"
+          pwd
+          ls -a
+          echo "-------"
 
       - name: Read Manifest File
         id: package
