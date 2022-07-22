@@ -84,7 +84,7 @@ jobs:
         uses: "pascalgn/automerge-action@v0.15.3"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
+          PULL_REQUEST: ${{ steps.cpr.outputs.pull-request-number }}
       # - id: automerge
       #   name: automerge
       #   uses: "pascalgn/automerge-action@v0.15.3"
