@@ -49,6 +49,7 @@ jobs:
           git config user.email ${{ github.actor }}@users.noreply.github.com
           npm i -g standard-version
           standard-version
+          # git push --follow-tags origin staging
           
       - name: Create Pull Request
         id: cpr
