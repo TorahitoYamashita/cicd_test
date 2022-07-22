@@ -35,7 +35,7 @@ jobs:
         with:
           path: ./manifest
 
-      - name: Prepare BRANCH_NAME and PR_TITLE
+      - name: Prepare branch_name and pr_title
         id: vars
         run: |
           export BRANCH_NAME BRANCH_NAME="rel/${{ steps.updated_manifest.outputs.content }}"
@@ -61,6 +61,8 @@ jobs:
           branch: ${{ steps.vars.outputs.branch_name }}
           delete-branch: true
           base: staging
+          labels: |
+            automerge
           assignees: ${{ github.actor }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
 
@@ -76,6 +78,12 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - id: automerge
+        name: automerge
+        uses: "pascalgn/automerge-action@v0.15.3"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       # - id: automerge
       #   name: automerge
