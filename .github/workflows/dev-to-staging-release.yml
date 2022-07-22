@@ -2,24 +2,9 @@ name: Dev to Staging Release
 
 on:
   workflow_dispatch:
-    inputs:
-      weeklyReleaseNumber:
-        description: 'Number of the release of the week'
-        required: true
-      versionBump:
-        description: |
-          How would you like to bump the version?
-          major (2.0.0) |
-          minor (1.2.0) |
-          patch (1.1.1) |
-          pre-release major (2.0.0-beta.1) |
-          pre-release minor (1.2.0-beta.1) |
-          pre-release patch (1.1.1-beta.1) |
-          pre-release (1.1.1-beta.1)
-        required: true  
 
-jobs:  
-  Create_Staging_Release_PR:
+jobs:
+  Staging_Promotion:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,35 +13,43 @@ jobs:
         with:
           ref: staging
 
-      - name: Read package.json
-        id: package
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./a.txt
-      - name: Echo package.json
-        run: echo "${{ steps.package.outputs.content }}"
-
-      - name: Prepare BRANCH_NAME and PR_TITLE
-        id: vars
-        run: |
-          YEAR_AND_WEEK="$(date +"%y.%U.")"
-          VERSION=${YEAR_AND_WEEK}${{ github.event.inputs.weeklyReleaseNumber }}
-          export BRANCH_NAME BRANCH_NAME="rel/${VERSION}"
-          export PR_TITLE PR_TITLE="chore: release ${VERSION}"
-          echo ::set-output name=branch_name::${BRANCH_NAME}
-          echo ::set-output name=pr_title::${PR_TITLE}
-
       - name: Reset Promotion Branch
         run: |
           git fetch origin dev:dev
           git reset --hard dev
 
+      - name: Read Manifest File
+        id: manifest
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./manifest
+
+      - name: Update Manifest File
+        run: |
+          chmod +x ./.github/script.sh
+          ./.github/script.sh "${{ steps.manifest.outputs.content }}"
+
+      - name: Read Updated Manifest File
+        id: updated_manifest
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./manifest
+
+      - name: Prepare branch_name and pr_title
+        id: vars
+        run: |
+          export BRANCH_NAME BRANCH_NAME="rel/${{ steps.updated_manifest.outputs.content }}"
+          export PR_TITLE PR_TITLE="chore: release ${{ steps.updated_manifest.outputs.content }}"
+          echo ::set-output name=branch_name::${BRANCH_NAME}
+          echo ::set-output name=pr_title::${PR_TITLE}
+
       - name: Bump Version and Add Change Log
         run: |
-          npm i -g @jsdevtools/version-bump-prompt
-          bump ${{ github.event.inputs.versionBump }}
-          npm i -g conventional-changelog-cli
-          conventional-changelog -p angular -i CHANGELOG.md -s
+          git config user.name ${{ github.actor }}
+          git config user.email ${{ github.actor }}@users.noreply.github.com
+          npm i -g standard-version
+          standard-version
+          # git push --follow-tags origin staging
           
       - name: Create Pull Request
         id: cpr
@@ -69,6 +62,8 @@ jobs:
           branch: ${{ steps.vars.outputs.branch_name }}
           delete-branch: true
           base: staging
+          labels: |
+            automerge
           assignees: ${{ github.actor }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
 
@@ -85,6 +80,12 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
+      - id: automerge
+        name: automerge
+        uses: "pascalgn/automerge-action@v0.15.3"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          PULL_REQUEST: ${{ steps.cpr.outputs.pull-request-number }}
       # - id: automerge
       #   name: automerge
       #   uses: "pascalgn/automerge-action@v0.15.3"
@@ -137,9 +138,9 @@ jobs:
           echo ${{ toJson(steps.stepssss.outputs) }}
           echo "$STEPS_CONTEXT"
 
-  Create_Sync_Dev_PR:
-    uses: ./.github/workflows/sync-dev.yml
-    with:
-      version_bump: ${{ github.event.inputs.versionBump }}
-    secrets: inherit
+  # Create_Sync_Dev_PR:
+  #   uses: ./.github/workflows/sync-dev.yml
+  #   with:
+  #     version_bump: ${{ github.event.inputs.versionBump }}
+  #   secrets: inherit
 

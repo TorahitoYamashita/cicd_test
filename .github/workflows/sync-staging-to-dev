@@ -1,0 +1,20 @@
+name: Sync Staging to Dev
+
+on:
+  status
+
+jobs:
+  if_error_or_failure:
+    runs-on: ubuntu-latest
+    # if: >-
+    #   github.event.state == 'error' ||
+    #   github.event.state == 'failure'
+    steps:
+      - env:
+          DESCRIPTION: ${{ github.event.description }}
+          STATE: ${{ github.event.state }}
+          CONTEXT: ${{ github.event.context }}
+        run: |
+          echo DESCRIPTION: $DESCRIPTION
+          echo STATE: $STATE
+          echo CONTEXT: $CONTEXT
