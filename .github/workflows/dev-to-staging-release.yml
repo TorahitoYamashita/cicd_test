@@ -45,6 +45,8 @@ jobs:
 
       - name: Bump Version and Add Change Log
         run: |
+          git config user.name ${{ github.actor }}
+          git config user.email ${{ github.actor }}@users.noreply.github.com
           npm i -g standard-version
           standard-version
           
