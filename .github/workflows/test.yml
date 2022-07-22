@@ -6,9 +6,6 @@ on:
 jobs:  
   Create_Staging_Release_PR:
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     shell: bash
 
     steps:
       - name: Checkout

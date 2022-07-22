@@ -2,16 +2,15 @@
 
 set -ex
 
-pwd
-ls -a
-cat "./manifest"
-
 if [ -z "$1" ]; then
     echo 'ERROR: Missing version from manifest file!'
     exit 1
 fi
 
-YEAR_AND_WEEK="v$(date +"%y.%U.")"
+echo "Before update: $1"
+cat "./manifest"
+
+YEAR_AND_WEEK="$(date +"%y.%U.")"
 WEEK="$(date +"%U")"
 
 IFS='.' read -ra ARRAY <<< $1
@@ -24,13 +23,9 @@ else
     VERSION=${YEAR_AND_WEEK}1
 fi
 
-echo ${VERSION}
-echo "before 1"
-cat "./manifest"
-echo "after 1"
+echo "After update: ${VERSION}"
 
 echo ${VERSION} > "./manifest"
 
-echo "before 2"
+echo "After update: ${VERSION}"
 cat "./manifest"
-echo "after 2"
