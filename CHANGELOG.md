@@ -18,7 +18,9 @@ All notable changes to this project will be documented in this file. See [standa
 * add if check ([865f94d](https://github.com/TorahitoYamashita/cicd_test/commit/865f94dba8fda086866d883d5c34a3499ff2ceee))
 * add name ([4901b28](https://github.com/TorahitoYamashita/cicd_test/commit/4901b289573837df1b5f0bc9ea5572a074b84e46))
 * add pr number ([45e62da](https://github.com/TorahitoYamashita/cicd_test/commit/45e62dac3f1000438306bfb1ed37178cc23aeb0d))
+
 * change to check pending ([27fdca4](https://github.com/TorahitoYamashita/cicd_test/commit/27fdca479fe77d759b6c517137cb83967764dab4))
+
 
 ### [22.28.12](https://github.com/TorahitoYamashita/cicd_test/compare/v22.28.10...v22.28.12) (2022-07-13)
 
