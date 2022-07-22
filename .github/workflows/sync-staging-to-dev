@@ -1,3 +1,5 @@
+name: Sync Staging to Dev
+
 on:
   status
 
