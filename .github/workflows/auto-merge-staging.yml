@@ -17,6 +17,9 @@ on:
   #   types:
   #     - completed
   # status: {}
+    branches:    
+      - 'staging'
+
 jobs:
   automerge:
     runs-on: ubuntu-latest
