@@ -6,7 +6,7 @@ on:
 jobs:
   if_error_or_failure:
     runs-on: ubuntu-latest
-    if: github.event.state == 'success'
+    if: github.event.state == 'pending'
     # if: >-
     #   github.event.state == 'error' ||
     #   github.event.state == 'failure'
