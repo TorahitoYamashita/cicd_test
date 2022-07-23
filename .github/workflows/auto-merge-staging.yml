@@ -17,8 +17,7 @@ on:
   #   types:
   #     - completed
   # status: {}
-    branches:    
-      - 'staging'
+    branches: [staging]
 
 jobs:
   automerge:
