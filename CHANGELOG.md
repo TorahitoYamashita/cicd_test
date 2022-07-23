@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file. See [standa
 * add auto merge ([cff0f2b](https://github.com/TorahitoYamashita/cicd_test/commit/cff0f2b520d762604b9e6823f7023f42d07250e5))
 * finalize ([d44883a](https://github.com/TorahitoYamashita/cicd_test/commit/d44883a7711918b225d5af3f17d219e63ef142f7))
 * separate auto merge ([e254678](https://github.com/TorahitoYamashita/cicd_test/commit/e254678808198e3af169bec0fbf921b876e43625))
+
 * status check ([2cd98ee](https://github.com/TorahitoYamashita/cicd_test/commit/2cd98eef2b8e0d388087169979607418318db694))
 
 
