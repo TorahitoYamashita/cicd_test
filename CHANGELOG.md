@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.9.0](https://github.com/TorahitoYamashita/cicd_test/compare/v4.1.0...v4.9.0) (2022-07-23)
+
+
+### Features
+
+* 5th line to d ([78db45f](https://github.com/TorahitoYamashita/cicd_test/commit/78db45fb4b1e5552bb2be9a60b31039cb46616f9))
+* ad ([d31330d](https://github.com/TorahitoYamashita/cicd_test/commit/d31330d0ed3efb205c82f749a0c4b1fe85b492ee))
+* add 100 ([14eeec1](https://github.com/TorahitoYamashita/cicd_test/commit/14eeec184f034f8c857a783a6a4852c58efc2572))
+* add 100 to d ([d94fd69](https://github.com/TorahitoYamashita/cicd_test/commit/d94fd69104757514d846f18f01d4cf07bbd3c89c))
+* add 11 ([672310b](https://github.com/TorahitoYamashita/cicd_test/commit/672310b4add772076205120f4033c346c2cae0cb))
+* add 11th line to d ([ae04764](https://github.com/TorahitoYamashita/cicd_test/commit/ae04764aee037d8588345713d9372dc157ac4573))
+* add auto merge ([cff0f2b](https://github.com/TorahitoYamashita/cicd_test/commit/cff0f2b520d762604b9e6823f7023f42d07250e5))
+* add e ([f0e77a3](https://github.com/TorahitoYamashita/cicd_test/commit/f0e77a3020c4a56f1b3ed29db6150c8051fb453d))
+* finalize ([d44883a](https://github.com/TorahitoYamashita/cicd_test/commit/d44883a7711918b225d5af3f17d219e63ef142f7))
+* separate auto merge ([e254678](https://github.com/TorahitoYamashita/cicd_test/commit/e254678808198e3af169bec0fbf921b876e43625))
+* status check ([2cd98ee](https://github.com/TorahitoYamashita/cicd_test/commit/2cd98eef2b8e0d388087169979607418318db694))
+
+
+### Bug Fixes
+
+* add gh credentials ([0122f3d](https://github.com/TorahitoYamashita/cicd_test/commit/0122f3d235dc7d416f5101a8a2f7b5de6f88c823))
+* add if check ([865f94d](https://github.com/TorahitoYamashita/cicd_test/commit/865f94dba8fda086866d883d5c34a3499ff2ceee))
+* add name ([4901b28](https://github.com/TorahitoYamashita/cicd_test/commit/4901b289573837df1b5f0bc9ea5572a074b84e46))
+* add opened ([5d43ff6](https://github.com/TorahitoYamashita/cicd_test/commit/5d43ff69426db571990f33ea8c05282a284a59ba))
+* add pr number ([45e62da](https://github.com/TorahitoYamashita/cicd_test/commit/45e62dac3f1000438306bfb1ed37178cc23aeb0d))
+* change to check pending ([27fdca4](https://github.com/TorahitoYamashita/cicd_test/commit/27fdca479fe77d759b6c517137cb83967764dab4))
+
+### [22.28.12](https://github.com/TorahitoYamashita/cicd_test/compare/v22.28.10...v22.28.12) (2022-07-13)
+
 ## [4.8.0](https://github.com/TorahitoYamashita/cicd_test/compare/v4.1.0...v4.8.0) (2022-07-23)
 
 
