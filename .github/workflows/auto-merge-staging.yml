@@ -5,7 +5,7 @@ on:
       - labeled
   #     - unlabeled
   #     - synchronize
-  #     - opened
+      - opened
   #     - edited
   #     - ready_for_review
   #     - reopened
