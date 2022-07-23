@@ -1,7 +1,7 @@
 name: logging
 on:
   pull_request:
-    types: [opened, labeled]
+    types: [labeled]
     branches: [staging]
 
 jobs:
