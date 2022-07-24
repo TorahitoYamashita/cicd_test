@@ -24,6 +24,7 @@ jobs:
           echo CONTEXT: $CONTEXT
           echo EVENT_SHA: $EVENT_SHA
           echo EVENT_SHA: $STAGING_SHA
+          #!/bin/bash
           for i in "${${{ toJson(github.event.branches) }}[@]}"
           do
             echo "$i"
