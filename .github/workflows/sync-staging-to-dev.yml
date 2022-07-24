@@ -24,9 +24,16 @@ jobs:
           echo EVENT_SHA: $EVENT_SHA
           echo EVENT_SHA: $STAGING_SHA
           echo GIT_BRANCH: ${GITHUB_REF#refs/heads/}
-          echo STATUSES111: contains($STATUSES, 'staging')
-          echo STATUSES222: contains(${{ github.event.target_url }}, 'staging')
-          echo STATUSES: contains(github.event.target_url, 'staging')
+          echo STATUSES: $STATUSES
+
+      - name: Conditionally Run
+        if: contains(env.STATUSES, 'staging')
+        run: |
+          echo "this works"
+      - name: Conditionally Run
+        if: contains(github.event.target_url, 'staging')
+        run: |
+          echo "this works too"
 
       - name: Dump GitHub event context
         env:
