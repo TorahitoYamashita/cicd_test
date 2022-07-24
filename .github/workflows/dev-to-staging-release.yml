@@ -1,7 +1,6 @@
 name: Dev to Staging Release
 
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   Staging_Promotion:

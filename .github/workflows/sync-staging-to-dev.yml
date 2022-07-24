@@ -1,7 +1,6 @@
 name: Sync Staging to Dev
 
-on:
-  status
+on: status
 
 jobs:
   if_error_or_failure:
