@@ -16,7 +16,7 @@ jobs:
           CONTEXT: ${{ github.event.context }}
           EVENT_SHA: ${{ github.event.sha }}
           STAGING_SHA: ${{ toJson(github.event.branches) }}
-          STATUSES: ${{ github.event.statuses[0].target_url }}
+          STATUSES: ${{ toJson(github.event.statuses) }}
         run: |
           echo DESCRIPTION: $DESCRIPTION
           echo STATE: $STATE
@@ -24,7 +24,7 @@ jobs:
           echo EVENT_SHA: $EVENT_SHA
           echo EVENT_SHA: $STAGING_SHA
           echo GIT_BRANCH: ${GITHUB_REF#refs/heads/}
-          echo STATUSES: $STATUSES
+          echo STATUSES: contains(github.event.statuses, 'staging')
 
       - name: Dump GitHub event context
         env:
