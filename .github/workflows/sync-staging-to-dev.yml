@@ -25,11 +25,12 @@ jobs:
           echo EVENT_SHA: $EVENT_SHA
           echo EVENT_SHA: $STAGING_SHA
           echo GIT_BRANCH: ${GITHUB_REF#refs/heads/}
-          # #!/bin/bash
-          # for i in "${${{ toJson(github.event.branches) }}[@]}"
-          # do
-          #   echo "$i"
-          # done
+          
+          for i in "${${{ toJson(github.event.branches) }}[@]}"
+          do
+            echo "$i"
+          done
+        shell: bash
 
       - name: Dump GitHub event context
         env:
