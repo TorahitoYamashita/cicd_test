@@ -24,7 +24,6 @@ All notable changes to this project will be documented in this file. See [standa
 * status check ([2cd98ee](https://github.com/TorahitoYamashita/cicd_test/commit/2cd98eef2b8e0d388087169979607418318db694))
 * syntax ([bcf7270](https://github.com/TorahitoYamashita/cicd_test/commit/bcf72704ad0348b904f5041f847484f968e9d3b4))
 
-
 ### Bug Fixes
 
 * aaf ([095f1f9](https://github.com/TorahitoYamashita/cicd_test/commit/095f1f9d9cf584d747b2cc036c070a81df92868e))
