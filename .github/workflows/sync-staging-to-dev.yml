@@ -26,7 +26,6 @@ jobs:
           echo EVENT_SHA: $STAGING_SHA
           for i in "${${{ github.event.branches }}[@]}"
           do
-            : 
             echo "$i"
           done
 
