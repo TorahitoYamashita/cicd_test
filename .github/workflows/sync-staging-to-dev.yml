@@ -1,8 +1,6 @@
 name: Sync Staging to Dev
 
-on: 
-  status:
-    branches: [staging]
+on: status
 
 jobs:
   if_error_or_failure:
@@ -18,6 +16,7 @@ jobs:
           CONTEXT: ${{ github.event.context }}
           EVENT_SHA: ${{ github.event.sha }}
           STAGING_SHA: ${{ toJson(github.event.branches) }}
+          STATUSES: ${{ github.event.statuses[0].target_url }}
         run: |
           echo DESCRIPTION: $DESCRIPTION
           echo STATE: $STATE
@@ -25,12 +24,7 @@ jobs:
           echo EVENT_SHA: $EVENT_SHA
           echo EVENT_SHA: $STAGING_SHA
           echo GIT_BRANCH: ${GITHUB_REF#refs/heads/}
-          
-          for i in "${${{ toJson(github.event.branches) }}[@]}"
-          do
-            echo "$i"
-          done
-        shell: bash
+          echo STATUSES: $STATUSES
 
       - name: Dump GitHub event context
         env:
