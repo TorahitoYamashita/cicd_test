@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file. See [standa
 * only lablesd ([c492b69](https://github.com/TorahitoYamashita/cicd_test/commit/c492b69d93aba9cd4ae0e254c45da89493145720))
 * separate auto merge ([e254678](https://github.com/TorahitoYamashita/cicd_test/commit/e254678808198e3af169bec0fbf921b876e43625))
 * status check ([2cd98ee](https://github.com/TorahitoYamashita/cicd_test/commit/2cd98eef2b8e0d388087169979607418318db694))
-
+* syntax ([bcf7270](https://github.com/TorahitoYamashita/cicd_test/commit/bcf72704ad0348b904f5041f847484f968e9d3b4))
 
 ### Bug Fixes
 
