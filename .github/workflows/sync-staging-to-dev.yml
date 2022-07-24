@@ -24,6 +24,10 @@ jobs:
           echo CONTEXT: $CONTEXT
           echo EVENT_SHA: $EVENT_SHA
           echo EVENT_SHA: $STAGING_SHA
+          for i in "${${{ github.event.branches }}[@]}"
+          do
+            echo "$i"
+          done
 
       - name: Dump GitHub event context
         env:
