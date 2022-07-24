@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file. See [standa
 * add 13 ([2437727](https://github.com/TorahitoYamashita/cicd_test/commit/2437727f0b883c1a86f9557d73fdd382884e2c78))
 * add 2 ([12e53c4](https://github.com/TorahitoYamashita/cicd_test/commit/12e53c4e072eb6251982b15001a28175254c1ab6))
 * add auto merge ([cff0f2b](https://github.com/TorahitoYamashita/cicd_test/commit/cff0f2b520d762604b9e6823f7023f42d07250e5))
+* add branches ([50adb8e](https://github.com/TorahitoYamashita/cicd_test/commit/50adb8e68098f2354376681b0c08d542034c4337))
 * add e ([f0e77a3](https://github.com/TorahitoYamashita/cicd_test/commit/f0e77a3020c4a56f1b3ed29db6150c8051fb453d))
 * finalize ([d44883a](https://github.com/TorahitoYamashita/cicd_test/commit/d44883a7711918b225d5af3f17d219e63ef142f7))
 * only lablesd ([c492b69](https://github.com/TorahitoYamashita/cicd_test/commit/c492b69d93aba9cd4ae0e254c45da89493145720))
