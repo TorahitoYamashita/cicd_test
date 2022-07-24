@@ -17,7 +17,7 @@ jobs:
           STATE: ${{ github.event.state }}
           CONTEXT: ${{ github.event.context }}
           EVENT_SHA: ${{ github.event.sha }}
-          STAGING_SHA: ${{ github.event.branches }}
+          STAGING_SHA: ${{ toJson(github.event.branches) }}
         run: |
           echo DESCRIPTION: $DESCRIPTION
           echo STATE: $STATE
