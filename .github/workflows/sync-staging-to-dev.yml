@@ -16,10 +16,14 @@ jobs:
           DESCRIPTION: ${{ github.event.description }}
           STATE: ${{ github.event.state }}
           CONTEXT: ${{ github.event.context }}
+          EVENT_SHA: ${{ github.event.sha }}
+          STAGING_SHA: ${{ github.event.branches }}
         run: |
           echo DESCRIPTION: $DESCRIPTION
           echo STATE: $STATE
           echo CONTEXT: $CONTEXT
+          echo EVENT_SHA: $EVENT_SHA
+          echo EVENT_SHA: $STAGING_SHA
 
       - name: Dump GitHub event context
         env:
