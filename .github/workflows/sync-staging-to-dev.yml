@@ -14,6 +14,13 @@ jobs:
         with:
           ref: staging
 
+      # - name: set env
+      #   run: |
+      #     chmod +x ./.github/script.sh
+      #     ./.github/script.sh "${{ steps.manifest.outputs.content }}"
+
+      #     echo "::set-env name=VERSION::$(sh scripts/test.sh)"
+
       - name: staging to dev
         id: cpr
         uses: repo-sync/pull-request@v2
@@ -23,6 +30,26 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_label: "automerge"
 
+      - id: automerge
+        name: automerge
+        uses: "pascalgn/automerge-action@v0.15.3"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULL_REQUEST: ${{ steps.cpr.outputs.pr_number }}
+
+      - name: Slack Notification - Staging to dev merged
+        id: slack
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          payload: |
+            {
+              "url": "${{ steps.cpr.outputs.pr_url }}",
+              "what_pr": "Sync Staging into Dev",
+              "operation": "${{ steps.automerge.outputs.mergeResult }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
       - name: staging to main
         id: cpr2
         uses: repo-sync/pull-request@v2
@@ -31,12 +58,19 @@ jobs:
           destination_branch: "main"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - id: automerge
-        name: automerge
-        uses: "pascalgn/automerge-action@v0.15.3"
+      - name: Slack Notification
+        id: slack
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          payload: |
+            {
+              "url": "${{ steps.cpr2.outputs.pr_url }}",
+              "what_pr": "Staging to Main release",
+              "operation": "created"
+            }
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PULL_REQUEST: ${{ steps.cpr.outputs.pr_number }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
       # - name: Pull Request Automerge
       #   if: steps.cpr.outputs.has_changed_files
       #   uses: peter-evans/enable-pull-request-automerge@v2
