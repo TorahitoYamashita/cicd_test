@@ -23,6 +23,14 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_label: "automerge"
 
+      - name: staging to main
+        id: cpr2
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: "staging"
+          destination_branch: "main"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
       - id: automerge
         name: automerge
         uses: "pascalgn/automerge-action@v0.15.3"
