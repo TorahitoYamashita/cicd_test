@@ -38,7 +38,6 @@ jobs:
           PULL_REQUEST: ${{ steps.cpr.outputs.pr_number }}
 
       - name: Slack Notification - Staging to dev merged
-        id: slack
         uses: slackapi/slack-github-action@v1.19.0
         with:
           payload: |
@@ -59,7 +58,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Slack Notification
-        id: slack
         uses: slackapi/slack-github-action@v1.19.0
         with:
           payload: |
