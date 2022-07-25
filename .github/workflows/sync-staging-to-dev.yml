@@ -5,35 +5,47 @@ on: status
 jobs:
   if_error_or_failure:
     runs-on: ubuntu-latest
-    if: github.event.state == 'success'
-    # if: >-
-    #   github.event.state == 'error' ||
-    #   github.event.state == 'failure'
+    if: >-
+      github.event.state == 'success' &&
+      contains(github.event.target_url, 'staging')
     steps:
-      - env:
-          DESCRIPTION: ${{ github.event.description }}
-          STATE: ${{ github.event.state }}
-          CONTEXT: ${{ github.event.context }}
-          EVENT_SHA: ${{ github.event.sha }}
-          STAGING_SHA: ${{ toJson(github.event.branches) }}
-          STATUSES: ${{ github.event.target_url }}
-        run: |
-          echo DESCRIPTION: $DESCRIPTION
-          echo STATE: $STATE
-          echo CONTEXT: $CONTEXT
-          echo EVENT_SHA: $EVENT_SHA
-          echo EVENT_SHA: $STAGING_SHA
-          echo GIT_BRANCH: ${GITHUB_REF#refs/heads/}
-          echo STATUSES: $STATUSES
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: staging
 
-      - name: Conditionally Run
-        if: contains(env.STATUSES, 'staging')
-        run: |
-          echo "this works"
-      - name: Conditionally Run
-        if: contains(github.event.target_url, 'staging')
-        run: |
-          echo "this works too"
+      - name: staging to dev 
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: "staging"
+          destination_branch: "dev"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_label: "automerge"
+
+      # - env:
+      #     DESCRIPTION: ${{ github.event.description }}
+      #     STATE: ${{ github.event.state }}
+      #     CONTEXT: ${{ github.event.context }}
+      #     EVENT_SHA: ${{ github.event.sha }}
+      #     STAGING_SHA: ${{ toJson(github.event.branches) }}
+      #     STATUSES: ${{ github.event.target_url }}
+      #   run: |
+      #     echo DESCRIPTION: $DESCRIPTION
+      #     echo STATE: $STATE
+      #     echo CONTEXT: $CONTEXT
+      #     echo EVENT_SHA: $EVENT_SHA
+      #     echo EVENT_SHA: $STAGING_SHA
+      #     echo GIT_BRANCH: ${GITHUB_REF#refs/heads/}
+      #     echo STATUSES: $STATUSES
+
+      # - name: Conditionally Run
+      #   if: contains(env.STATUSES, 'staging')
+      #   run: |
+      #     echo "this works"
+      # - name: Conditionally Run
+      #   if: contains(github.event.target_url, 'staging')
+      #   run: |
+      #     echo "this works too"
 
       - name: Dump GitHub event context
         env:
