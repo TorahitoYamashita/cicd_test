@@ -26,6 +26,7 @@ jobs:
           git config user.name ${{ github.actor }}
           git config user.email ${{ github.actor }}@users.noreply.github.com
           git pull
+          git fetch origin staging:staging
           git merge staging
           git push
 
