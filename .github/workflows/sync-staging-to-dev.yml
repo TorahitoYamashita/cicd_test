@@ -1,15 +1,16 @@
-name: Sync Staging to Dev
+name: sync_dev_and_main_promotion
 
 on: status
 
 jobs:
-  if_error_or_failure:
+  sync_dev_and_main_promotion:
     runs-on: ubuntu-latest
+    
     if: >-
       github.event.state == 'success' &&
       contains(github.event.target_url, 'staging')
     steps:
-      - name: Checkout
+      - name: checkout
         uses: actions/checkout@v3
         with:
           ref: dev
@@ -21,7 +22,7 @@ jobs:
 
       #     echo "::set-env name=VERSION::$(sh scripts/test.sh)"
 
-      - name: sync staging to dev
+      - name: sync_staging_to_dev
         run: |
           git config user.name ${{ github.actor }}
           git config user.email ${{ github.actor }}@users.noreply.github.com
@@ -29,114 +30,51 @@ jobs:
           git merge staging
           git push
 
-      # - name: staging to dev
-      #   id: cpr
-      #   uses: repo-sync/pull-request@v2
-      #   with:
-      #     source_branch: "staging"
-      #     destination_branch: "dev"
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     pr_label: "automerge"
-
-      # - id: automerge
-      #   name: automerge
-      #   uses: "pascalgn/automerge-action@v0.15.3"
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     PULL_REQUEST: ${{ steps.cpr.outputs.pr_number }}
-
-      - name: Slack Notification - Staging to dev merged
+      - name: slack_notification_sync_staging_to_dev
         uses: slackapi/slack-github-action@v1.19.0
         with:
           payload: |
             {
-              "url": "${{ steps.cpr.outputs.pr_url }}",
-              "what_pr": "Sync Staging into Dev",
-              "operation": "${{ steps.automerge.outputs.mergeResult }}"
+              "message": "Synced Staing into Dev, please pull latest Dev to have up to date changes.",
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: staging to main
-        id: cpr2
+      - name: create_pr_from_staging_to_main
+        id: cpr
         uses: repo-sync/pull-request@v2
         with:
           source_branch: "staging"
           destination_branch: "main"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Slack Notification
+      - name: slack_notification_create_pr_from_staging_to_main
         uses: slackapi/slack-github-action@v1.19.0
         with:
           payload: |
             {
-              "url": "${{ steps.cpr2.outputs.pr_url }}",
-              "what_pr": "Staging to Main release",
-              "operation": "created"
+              "message": "Staging to Main PR has been created ${{ steps.cpr.outputs.pr_url }}, please review and take action."
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      # - name: Pull Request Automerge
-      #   if: steps.cpr.outputs.has_changed_files
-      #   uses: peter-evans/enable-pull-request-automerge@v2
-      #   with:
-      #     token: ${{ secrets.PAT }}
-      #     pull-request-number: ${{ steps.cpr.outputs.pr_number }}
-
-      # - env:
-      #     DESCRIPTION: ${{ github.event.description }}
-      #     STATE: ${{ github.event.state }}
-      #     CONTEXT: ${{ github.event.context }}
-      #     EVENT_SHA: ${{ github.event.sha }}
-      #     STAGING_SHA: ${{ toJson(github.event.branches) }}
-      #     STATUSES: ${{ github.event.target_url }}
-      #   run: |
-      #     echo DESCRIPTION: $DESCRIPTION
-      #     echo STATE: $STATE
-      #     echo CONTEXT: $CONTEXT
-      #     echo EVENT_SHA: $EVENT_SHA
-      #     echo EVENT_SHA: $STAGING_SHA
-      #     echo GIT_BRANCH: ${GITHUB_REF#refs/heads/}
-      #     echo STATUSES: $STATUSES
-
-      # - name: Conditionally Run
-      #   if: contains(env.STATUSES, 'staging')
-      #   run: |
-      #     echo "this works"
-      # - name: Conditionally Run
-      #   if: contains(github.event.target_url, 'staging')
-      #   run: |
-      #     echo "this works too"
-
-      - name: Dump GitHub event context
-        env:
-          GITHUB_EVENT_CONTEXT: ${{ toJson(github.event) }}
-        run: echo "$GITHUB_EVENT_CONTEXT"
-      - name: Dump GitHub event context
+      # for debugging
+      - name: logging_gitHub_context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
+
+      - name: logging_job_context
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
         run: echo "$JOB_CONTEXT"
 
-      - name: Dump steps context
-        id: stepssss
+      - name: logging_steps_context
         env:
           STEPS_CONTEXT: ${{ toJson(steps) }}
         run: echo "$STEPS_CONTEXT"
 
-      - name: Dump runner context
+      - name: logging_runner_context
         env:
           RUNNER_CONTEXT: ${{ toJson(runner) }}
         run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"          
