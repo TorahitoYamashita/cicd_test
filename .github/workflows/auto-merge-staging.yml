@@ -33,6 +33,15 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
+      - name: logging_gitHub_context
+        env:
+          GITHUB_CONTEXT1: ${{ toJson(github.event) }}
+        run: echo "$GITHUB_CONTEXT1"
+      - name: logging_gitHub_context
+        env:
+          GITHUB_CONTEXT2: ${{ github.event.html_url }}
+        run: echo "$GITHUB_CONTEXT2"
+
       - name: logging_job_context
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
