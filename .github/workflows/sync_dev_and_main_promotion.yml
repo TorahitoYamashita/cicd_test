@@ -35,7 +35,7 @@ jobs:
         with:
           payload: |
             {
-              "message": "Synced Staing into Dev, please pull latest Dev to have up to date changes.",
+              "message": "Synced Staing into Dev, please pull latest Dev to have up to date changes."
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
