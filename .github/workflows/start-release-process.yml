@@ -72,7 +72,7 @@ jobs:
         with:
           payload: |
             {
-              "message": "Starting bills-service release process! Dev to Staging PR has been created ${{ steps.cpr.outputs.pull-request-url }}"
+              "message": "Starting bills-service release process! \n Dev to Staging PR has been created ${{ steps.cpr.outputs.pull-request-url }}"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -82,6 +82,11 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
+
+      - name: logging_event_context
+        env:
+          EVENT_CONTEXT: ${{ toJson(github.event) }}
+        run: echo "$EVENT_CONTEXT"
 
       - name: logging_job_context
         env:

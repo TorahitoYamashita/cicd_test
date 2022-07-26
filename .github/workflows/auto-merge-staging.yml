@@ -22,7 +22,7 @@ jobs:
         with:
           payload: |
             {
-              "message": "Dev to Staging PR has been merged ${{ steps.automerge.outputs.pullRequestNumber }}"
+              "message": "Dev to Staging PR has been merged ${{ github.event.pull_request._links.html.href }}"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -33,14 +33,10 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
-      - name: logging_gitHub_context
+      - name: logging_event_context
         env:
-          GITHUB_CONTEXT1: ${{ toJson(github.event) }}
-        run: echo "$GITHUB_CONTEXT1"
-      - name: logging_gitHub_context
-        env:
-          GITHUB_CONTEXT2: ${{ github.event.pull_request._links.html.href }}
-        run: echo "$GITHUB_CONTEXT2"
+          EVENT_CONTEXT: ${{ toJson(github.event) }}
+        run: echo "$EVENT_CONTEXT"
 
       - name: logging_job_context
         env:
