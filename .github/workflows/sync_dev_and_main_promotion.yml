@@ -35,7 +35,7 @@ jobs:
         with:
           payload: |
             {
-              "message": "Synced Staing into Dev, please pull latest Dev to have up to date changes."
+              "message": "Synced Staging into Dev, please pull latest Dev to have up-to-date code"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -53,7 +53,7 @@ jobs:
         with:
           payload: |
             {
-              "message": "Staging to Main PR has been created ${{ steps.cpr.outputs.pr_url }}, please review and take action."
+              "message": "Staging to Main PR has been created ${{ steps.cpr.outputs.pr_url }}, please review and take action"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -63,6 +63,11 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
+
+      - name: logging_event_context
+        env:
+          EVENT_CONTEXT: ${{ toJson(github.event) }}
+        run: echo "$EVENT_CONTEXT"
 
       - name: logging_job_context
         env:
