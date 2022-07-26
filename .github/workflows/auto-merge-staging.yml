@@ -39,7 +39,7 @@ jobs:
         run: echo "$GITHUB_CONTEXT1"
       - name: logging_gitHub_context
         env:
-          GITHUB_CONTEXT2: ${{ github.event.html_url }}
+          GITHUB_CONTEXT2: ${{ github.event.pull_request._links.html.href }}
         run: echo "$GITHUB_CONTEXT2"
 
       - name: logging_job_context
