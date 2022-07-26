@@ -1,15 +1,49 @@
-name: automerge
+name: automerge_staging_pr
+
 on:
   pull_request:
     types: [labeled]
-    branches: [staging, dev]
+    branches: [staging]
 
 jobs:
   automerge:
     runs-on: ubuntu-latest
+
     steps:
       - id: automerge
         name: automerge
         uses: "pascalgn/automerge-action@v0.15.3"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: slack_notification_staging_pr_automerge
+        id: slack
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          payload: |
+            {
+              "message": "Dev to Staging PR has been merged ${{ steps.automerge.outputs.pullRequestNumber }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # for debugging
+      - name: logging_gitHub_context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: logging_job_context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+
+      - name: logging_steps_context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+
+      - name: logging_runner_context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
