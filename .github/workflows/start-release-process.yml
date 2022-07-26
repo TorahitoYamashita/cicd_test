@@ -72,7 +72,7 @@ jobs:
         with:
           payload: |
             {
-              "message": "Dev to Staging PR has been created ${{ steps.cpr.outputs.pull-request-url }}"
+              "message": "Starting bills-service release process! Dev to Staging PR has been created ${{ steps.cpr.outputs.pull-request-url }}"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
