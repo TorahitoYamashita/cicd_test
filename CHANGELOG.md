@@ -68,6 +68,7 @@ All notable changes to this project will be documented in this file. See [standa
 * add name ([4901b28](https://github.com/TorahitoYamashita/cicd_test/commit/4901b289573837df1b5f0bc9ea5572a074b84e46))
 * add opened ([5d43ff6](https://github.com/TorahitoYamashita/cicd_test/commit/5d43ff69426db571990f33ea8c05282a284a59ba))
 * add pr number ([45e62da](https://github.com/TorahitoYamashita/cicd_test/commit/45e62dac3f1000438306bfb1ed37178cc23aeb0d))
+* afa ([8e37ce3](https://github.com/TorahitoYamashita/cicd_test/commit/8e37ce33a5b9bf28d1de2302934d0f0bbd9f8c30))
 * afe ([84f49ef](https://github.com/TorahitoYamashita/cicd_test/commit/84f49ef3cd1a38e478a45ebb0fa067f1be1790a6))
 * change to check pending ([27fdca4](https://github.com/TorahitoYamashita/cicd_test/commit/27fdca479fe77d759b6c517137cb83967764dab4))
 * slack dup ([06902fe](https://github.com/TorahitoYamashita/cicd_test/commit/06902fe5cb8ba5db9dfae04ad8a8dd874cf98d71))
