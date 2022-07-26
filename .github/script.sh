@@ -3,11 +3,11 @@
 set -ex
 
 if [ -z "$1" ]; then
-    echo 'ERROR: Missing version from manifest file!'
+    echo 'error: missing version from manifest file!'
     exit 1
 fi
 
-echo "Before update: $1"
+echo "before update: $1"
 cat "./manifest"
 
 YEAR_AND_WEEK="$(date +"%y.%U.")"
@@ -23,9 +23,7 @@ else
     VERSION=${YEAR_AND_WEEK}1
 fi
 
-echo "After update: ${VERSION}"
-
 echo ${VERSION} > "./manifest"
 
-echo "After update: ${VERSION}"
+echo "after update: ${VERSION}"
 cat "./manifest"

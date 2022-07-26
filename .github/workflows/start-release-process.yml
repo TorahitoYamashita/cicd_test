@@ -57,12 +57,11 @@ jobs:
           token: ${{ secrets.PAT }}
           title: ${{ steps.vars.outputs.pr_title }}
           body: ${{ steps.vars.outputs.pr_title }}
-          commit-message: ${{ steps.vars.outputs.pr_title }}
           branch: ${{ steps.vars.outputs.branch_name }}
           delete-branch: true
           base: staging
-          labels: |
-            automerge
+          labels: automerge
+          team-reviewers: owners 
           assignees: ${{ github.actor }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
 
