@@ -30,9 +30,6 @@ jobs:
           git merge staging
           git push
 
-      - name: run_env
-        run: env
-
       - name: read_manifest_file
         id: manifest
         uses: juliangruber/read-file-action@v1
@@ -61,7 +58,11 @@ jobs:
         with:
           source_branch: "staging"
           destination_branch: "main"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_title: ${{ steps.vars.outputs.pr_title }}
+          pr_body: ${{ steps.vars.outputs.pr_title }}
+          pr_assignee: ${{ github.actor }}
+          pr_reviewer: owners
+          github_token: ${{ secrets.GITHUB_TOKEN }}          
 
       - name: slack_notification_create_pr_from_staging_to_main
         uses: slackapi/slack-github-action@v1.19.0
