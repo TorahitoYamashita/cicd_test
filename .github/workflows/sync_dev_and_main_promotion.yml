@@ -30,6 +30,21 @@ jobs:
           git merge staging
           git push
 
+      - name: run_env
+        run: env
+
+      - name: read_manifest_file
+        id: manifest
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./manifest
+
+      - name: prepare_pr_title
+        id: vars
+        run: |
+          export PR_TITLE PR_TITLE="chore: release ${{ steps.manifest.outputs.content }}"
+          echo ::set-output name=pr_title::${PR_TITLE}
+
       - name: slack_notification_sync_staging_to_dev
         uses: slackapi/slack-github-action@v1.19.0
         with:
