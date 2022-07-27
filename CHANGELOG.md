@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.58.0](https://github.com/TorahitoYamashita/cicd_test/compare/v22.30.44...v4.58.0) (2022-07-27)
+
+
+### Features
+
+* new start ([3c0a344](https://github.com/TorahitoYamashita/cicd_test/commit/3c0a3440d6c68c44bade71d912bd689b54865cbd))
+* over again ([00957d3](https://github.com/TorahitoYamashita/cicd_test/commit/00957d32046192f1fca22d13b61c865a6f1717d8))
+
 ## [4.57.0](https://github.com/TorahitoYamashita/cicd_test/compare/v22.30.44...v4.57.0) (2022-07-27)
 
 
