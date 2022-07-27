@@ -22,12 +22,19 @@ jobs:
           git fetch origin staging:staging
           git merge staging
           git push
+          git tag v${{ steps.manifest.outputs.content }}
+          git push --tags
 
       - name: read_manifest_file
         id: manifest
         uses: juliangruber/read-file-action@v1
         with:
           path: ./manifest
+
+      - name: push_tag
+        run: |
+          git tag v${{ steps.manifest.outputs.content }}
+          git push --tags
 
       - name: prepare_pr_title
         id: vars
@@ -66,18 +73,6 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-      - name: checkout
-        uses: actions/checkout@v3
-        with:
-          ref: staging
-
-      - name: push_tag
-        run: |
-          git config user.name ${{ github.actor }}
-          git config user.email ${{ github.actor }}@users.noreply.github.com
-          git tag v${{ steps.manifest.outputs.content }}
-          git push --tags
 
       # for debugging
       - name: logging_gitHub_context
