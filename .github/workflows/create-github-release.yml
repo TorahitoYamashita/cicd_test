@@ -1,0 +1,19 @@
+name: create_github_release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  create_github_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          ref: staging
+
+      - name: release
+        uses: softprops/action-gh-release@v1
