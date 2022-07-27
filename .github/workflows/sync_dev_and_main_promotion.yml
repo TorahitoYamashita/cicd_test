@@ -15,13 +15,6 @@ jobs:
         with:
           ref: dev
 
-      # - name: set env
-      #   run: |
-      #     chmod +x ./.github/script.sh
-      #     ./.github/script.sh "${{ steps.manifest.outputs.content }}"
-
-      #     echo "::set-env name=VERSION::$(sh scripts/test.sh)"
-
       - name: sync_staging_to_dev
         run: |
           git config user.name ${{ github.actor }}
@@ -69,10 +62,22 @@ jobs:
         with:
           payload: |
             {
-              "message": "Staging to Main PR has been created ${{ steps.cpr.outputs.pr_url }}, please review and take action"
+              "message": "Staging to Main PR has been created ${{ steps.cpr.outputs.pr_url }}, please review and merge"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          ref: staging
+
+      - name: push_tag
+        run: |
+          git config user.name ${{ github.actor }}
+          git config user.email ${{ github.actor }}@users.noreply.github.com
+          git tag ${{ steps.manifest.outputs.content }}
+          git push --tags
 
       # for debugging
       - name: logging_gitHub_context
