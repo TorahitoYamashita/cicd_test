@@ -53,7 +53,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
-          # token: ${{ secrets.PAT }}
+          token: ${{ secrets.PAT }}
           title: ${{ steps.vars.outputs.pr_title }}
           body: ${{ steps.vars.outputs.pr_title }}
           branch: ${{ steps.vars.outputs.branch_name }}
