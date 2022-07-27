@@ -22,8 +22,6 @@ jobs:
           git fetch origin staging:staging
           git merge staging
           git push
-          git tag v${{ steps.manifest.outputs.content }}
-          git push --tags
 
       - name: read_manifest_file
         id: manifest
