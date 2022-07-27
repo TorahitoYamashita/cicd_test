@@ -34,6 +34,12 @@ jobs:
           git tag v${{ steps.manifest.outputs.content }}
           git push -f origin staging v${{ steps.manifest.outputs.content }}
 
+      - name: create_release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: v${{ steps.manifest.outputs.content }}
+
       - name: prepare_pr_title
         id: vars
         run: |
