@@ -48,7 +48,7 @@ jobs:
           git config user.email ${{ github.actor }}@users.noreply.github.com
           npm i -g standard-version
           standard-version
-          git push --follow-tags
+          # git push --follow-tags
           
       - name: create_pull_request
         id: cpr
