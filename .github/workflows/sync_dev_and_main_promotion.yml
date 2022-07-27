@@ -31,8 +31,7 @@ jobs:
 
       - name: push_tag
         run: |
-          git tag v${{ steps.manifest.outputs.content }}
-          git push --tags
+          git push -f origin staging v${{ steps.manifest.outputs.content }}
 
       - name: prepare_pr_title
         id: vars
